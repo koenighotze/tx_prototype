@@ -27,7 +27,7 @@ public class UserRepositoryTest {
 
     @Test
     public void store_and_retrieve_user() {
-        User saved = userRepository.save(new User("David", "Schmitz", "dschmitz", "schmitz@foo.de"));
+        User saved = userRepository.save(new User("23", "David", "Schmitz", "dschmitz", "schmitz@foo.de"));
         assertThat(saved.getUserId()).isNotNull();
 
         User found = userRepository.findOne(saved.getUserId());

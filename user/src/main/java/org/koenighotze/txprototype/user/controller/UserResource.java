@@ -17,7 +17,7 @@ public class UserResource extends ResourceSupport {
     public UserResource(User user) {
         this.user = requireNonNull(user);
         add(linkTo(methodOn(UserRestController.class).getAllUsers()).withRel(COLLECTION.getRel()));
-        add(linkTo(methodOn(UserRestController.class, user.getUserId()).userById(user.getUserId())).withSelfRel());
+        add(linkTo(methodOn(UserRestController.class, user.getUserId()).userByPublicId(user.getPublicId())).withSelfRel());
     }
 
     public User getUser() {

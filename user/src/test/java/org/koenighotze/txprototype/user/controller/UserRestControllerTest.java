@@ -67,28 +67,28 @@ public class UserRestControllerTest {
 
     @Test
     public void get_a_single_user() throws Exception {
-        User user = userRepository.save(new User("first", "last", "flast", "foo@bar.de"));
+        User user = userRepository.save(new User("23", "first", "last", "flast", "foo@bar.de"));
 
         //@formatter:off
         mockMvc
-            .perform(get("/users/" + user.getUserId()))
+            .perform(get("/users/" + user.getPublicId()))
             .andExpect(content().contentType(APPLICATION_JSON_UTF8))
             .andExpect(jsonPath("$.user.firstname", is("first")))
             .andExpect(jsonPath("$._links.collection.href", endsWith("/users")))
-            .andExpect(jsonPath("$._links.self.href", endsWith("/users/" + user.getUserId())));
+            .andExpect(jsonPath("$._links.self.href", endsWith("/users/" + user.getPublicId())));
         //@formatter:on
     }
 
     @Test
     public void deleting_a_user_returns_ok() throws Exception {
-        User user = userRepository.save(new User("first", "last", "flast", "foo@bar.de"));
+        User user = userRepository.save(new User("23", "first", "last", "flast", "foo@bar.de"));
         //@formatter:off
         mockMvc
-            .perform(delete("/users/{id}", user.getUserId()))
+            .perform(delete("/users/{id}", user.getPublicId()))
             .andExpect(status().isOk());
 
         mockMvc
-            .perform(get("/users/{id}", user.getUserId()))
+            .perform(get("/users/{id}", user.getPublicId()))
             .andExpect(status().is(NOT_FOUND.value()));
         //@formatter:on
     }

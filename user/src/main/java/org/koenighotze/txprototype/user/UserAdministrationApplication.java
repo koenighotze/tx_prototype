@@ -17,9 +17,9 @@ public class UserAdministrationApplication {
     CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return evt -> {
             userRepository.deleteAll();
-            userRepository.save(new User("David", "Schmitz", "dschmitz", "dschmitz@foo.bar"));
-            userRepository.save(new User("Hugo", "Balder", "hbalder", "bhas@ds.dk"));
-            userRepository.save(new User("Samson", "Oxen", "sox", "gesox@de.de"));
+            userRepository.save(new User("david", "David", "Schmitz", "dschmitz", "dschmitz@foo.bar"));
+            userRepository.save(new User("hugo", "Hugo", "Balder", "hbalder", "bhas@ds.dk"));
+            userRepository.save(new User("samson", "Samson", "Oxen", "sox", "gesox@de.de"));
         };
     }
 }

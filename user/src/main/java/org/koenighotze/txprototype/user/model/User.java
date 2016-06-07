@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Represents a user.
@@ -12,18 +13,30 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  */
 public class User {
     @Id
+    @JsonIgnore
     private String userId;
+
+    private String publicId;
     private String firstname;
     private String lastname;
     private String username;
     private String email;
 
     @JsonCreator
-    public User(String firstname, String lastname, String username, String email) {
+    public User(String publicId, String firstname, String lastname, String username, String email) {
+        this.publicId = publicId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
         this.email = email;
+    }
+
+    public String getPublicId() {
+        return publicId;
+    }
+
+    public void setPublicId(String publicId) {
+        this.publicId = publicId;
     }
 
     public String getFirstname() {
@@ -68,8 +81,7 @@ public class User {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", userId)
+        return new ToStringBuilder(this).append("id", userId)
             .append("username", username)
             .append("email", email)
             .append("firstname", firstname)

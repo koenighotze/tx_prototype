@@ -79,14 +79,14 @@ public class UserRestController {
         //@formatter:on
     }
 
-    @RequestMapping(value = "/{userId}", method = DELETE)
-    public ResponseEntity<?> deleteUserById(@PathVariable String userId) {
+    @RequestMapping(value = "/{publicId}", method = DELETE)
+    public ResponseEntity<?> deleteUserByPublicId(@PathVariable String publicId) {
         //@formatter:off
-        Option<User> userOption = Option.of(userRepository.findOne(userId));
+        Option<User> userOption = Option.of(userRepository.findByPublicId(publicId));
 
         Option<HttpHeaders> result =
             userOption
-            .map(user -> { userRepository.delete(userId); return user; })
+            .map(user -> { userRepository.delete(user); return user; })
             .map(UserResource::new)
             .map(userResource -> userResource.getLink(Link.REL_SELF).getHref())
             .map(href -> {
@@ -102,19 +102,19 @@ public class UserRestController {
         //@formatter:on
     }
 
-    @RequestMapping(value = "/{userId}", method = GET)
-    public HttpEntity<UserResource> userById(@PathVariable String userId) {
+    @RequestMapping(value = "/{publicId}", method = GET)
+    public HttpEntity<UserResource> userByPublicId(@PathVariable String publicId) {
         //@formatter:off
-        return Match(Option.of(userRepository.findOne(userId))).of(
+        return Match(Option.of(userRepository.findByPublicId(publicId))).of(
           Case(Some($(instanceOf(User.class))), user -> new ResponseEntity<UserResource>(new UserResource(user), OK)),
           Case($(), new ResponseEntity<>(NOT_FOUND))
         );
         //@formatter:on
     }
 
-    @RequestMapping(value = "/{userId}", method = GET, produces = TEXT_HTML_VALUE)
-    public String showUser(@PathVariable String userId, Model model) {
-        UserResource user = userById(userId).getBody();
+    @RequestMapping(value = "/{publicId}", method = GET, produces = TEXT_HTML_VALUE)
+    public String showUser(@PathVariable String publicId, Model model) {
+        UserResource user = userByPublicId(publicId).getBody();
         model.addAttribute("user", user.getUser());
         model.addAttribute("collection", user.getLink("collection").getHref());
         return "user";
