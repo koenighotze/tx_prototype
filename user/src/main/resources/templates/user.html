@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Getting Started: Serving Web Content</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<div class="form-group">
+  <label for="username">Username</label>
+  <input type="text" readonly="readonly" class="form-control" id="username" th:value="${user.username}"/>
+</div>
+
+<div class="form-group">
+  <label for="firstname">First rel</label>
+  <input type="text" readonly="readonly" class="form-control" id="firstname" th:value="${user.firstname}"/>
+</div>
+
+<div class="form-group">
+  <label for="lastname">Last rel</label>
+  <input type="text" readonly="readonly" class="form-control" id="lastname" th:value="${user.lastname}"/>
+</div>
+
+<div class="form-group">
+  <label for="email">Email</label>
+  <input type="email" readonly="readonly" class="form-control" id="email" th:value="${user.email}"/>
+</div>
+
+<a th:href="@{${collection}}">Back</a>
+</body>
+</html>
