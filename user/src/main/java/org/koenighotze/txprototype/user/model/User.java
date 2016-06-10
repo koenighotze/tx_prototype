@@ -3,7 +3,6 @@ package org.koenighotze.txprototype.user.model;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.annotation.Id;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -22,7 +21,11 @@ public class User {
     private String username;
     private String email;
 
-    @JsonCreator
+    User() {
+
+    }
+
+//    @JsonCreator
     public User(String publicId, String firstname, String lastname, String username, String email) {
         this.publicId = publicId;
         this.firstname = firstname;

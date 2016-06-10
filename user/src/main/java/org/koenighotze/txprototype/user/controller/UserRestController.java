@@ -7,12 +7,14 @@ import static javaslang.API.Match;
 import static javaslang.Patterns.Some;
 import static javaslang.Predicates.instanceOf;
 import static org.springframework.hateoas.Link.REL_SELF;
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.net.URI;
 import java.util.Comparator;
@@ -25,10 +27,12 @@ import org.koenighotze.txprototype.user.repository.UserRepository;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javaslang.Tuple;
@@ -79,8 +83,31 @@ public class UserRestController {
         //@formatter:on
     }
 
+    @RequestMapping(value = "/{publicId}", method = PUT, consumes = APPLICATION_JSON_UTF8_VALUE)
+    public HttpEntity<UserResource> newUser(@PathVariable String publicId, @RequestBody User user) {
+        //@formatter:off
+        User userToStore = Option.of(userRepository.findByPublicId(publicId))
+            .map(foundUser -> {
+                foundUser.setEmail(user.getEmail());
+                foundUser.setLastname(user.getLastname());
+                foundUser.setFirstname(user.getFirstname());
+                return foundUser;
+            })
+            .getOrElse(user);
+        //@formatter:on
+
+        UserResource userResource = new UserResource(userToStore);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(URI.create(userResource.getLink(REL_SELF).getHref()));
+
+        HttpStatus status = Option.of(userToStore.getUserId()).map(id -> OK).getOrElse(CREATED);
+        userRepository.save(userToStore);
+
+        return new ResponseEntity<>(userResource, httpHeaders, status);
+    }
+
     @RequestMapping(value = "/{publicId}", method = DELETE)
-    public ResponseEntity<?> deleteUserByPublicId(@PathVariable String publicId) {
+    public HttpEntity<?> deleteUserByPublicId(@PathVariable String publicId) {
         //@formatter:off
         Option<User> userOption = Option.of(userRepository.findByPublicId(publicId));
 
