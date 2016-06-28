@@ -14,5 +14,4 @@ public class UserAdministrationApplicationTests {
 	@Test
 	public void contextLoads() {
 	}
-
 }

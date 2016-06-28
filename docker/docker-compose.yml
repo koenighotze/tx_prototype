@@ -1,0 +1,27 @@
+version: "2"
+
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:3.2.4
+    volumes: 
+      - mongodb-data:/data/db
+    ports:
+      - "27017:27017"
+
+  consul:
+    container_name: consul
+    image: progrium/consul
+    command: -server -bootstrap -ui-dir /ui
+    volumes:
+        - consul-data:/data
+    ports:
+      - "8500:8500"
+      - "8600:8600"
+      - "8400:8400"
+      - "8600:53/udp"
+
+volumes:
+    mongodb-data:
+    consul-data:
+
