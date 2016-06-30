@@ -55,7 +55,7 @@ public class UserRestControllerTest {
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
-        this.mappingJackson2HttpMessageConverter =
+        mappingJackson2HttpMessageConverter =
             Arrays.asList(converters).stream().filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter).findAny().get();
     }
 

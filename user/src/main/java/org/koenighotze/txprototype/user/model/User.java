@@ -1,9 +1,9 @@
 package org.koenighotze.txprototype.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.annotation.Id;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Represents a user.
@@ -21,11 +21,9 @@ public class User {
     private String username;
     private String email;
 
-    User() {
-
+    public User() {
     }
 
-//    @JsonCreator
     public User(String publicId, String firstname, String lastname, String username, String email) {
         this.publicId = publicId;
         this.firstname = firstname;
@@ -85,10 +83,10 @@ public class User {
     @Override
     public String toString() {
         return new ToStringBuilder(this).append("id", userId)
-            .append("username", username)
-            .append("email", email)
-            .append("firstname", firstname)
-            .append("lastname", lastname)
-            .toString();
+                .append("username", username)
+                .append("email", email)
+                .append("firstname", firstname)
+                .append("lastname", lastname)
+                .toString();
     }
 }
