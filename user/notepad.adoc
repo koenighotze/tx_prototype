@@ -1,0 +1,59 @@
+# Tx Prototype
+
+## Architecture overview
+
+[graphviz]
+----
+digraph G {
+  node [margin=0 fontname=Verdana fontsize=10 width=0.5 shape=box style=filled fillcolor="#EEEEEE" color="#EEEEEE"]
+  edge [color="#000000"];
+
+  Api_Gateway -> Consul[label = "lookup"];
+
+  User -> User_MongoDB;
+  User -> Consul[label = "register"];
+
+  PoS -> PoS_MongoDB;
+  PoS -> Consul[label = "register"];
+
+  Livefeed -> Livefeed_MongoDB;
+  Livefeed -> Consul[label = "register"];
+}
+----
+
+
+
+## About consul
+
+Suppose Consul is running at `192.168.99.100`
+
+Ui:
+
+http://192.168.99.100:8500
+
+Services:
+
+http://192.168.99.100:8500/v1/catalog/services?pretty
+
+Health:
+
+http://192.168.99.100:8500/v1/health/service/consul?pretty
+
+
+## BACKUP
+
+[graphviz]
+----
+digraph G {
+  node [margin=0 fontname=Verdana fontsize=10 width=0.5 shape=box style=filled fillcolor="#EEEEEE" color="#EEEEEE"]
+  edge [color="#000000"];
+
+
+    Business_demand -> Business_Objective[label = "führt zu"];
+    Agile_IT -> Business_Objective[label = "bedient"];
+    Agile_IT -> Agile_IT[label = "kontinuierliche, messbare Verbesserungen (Improvement Kata)"];
+
+    Agile_Development -> Agile_IT[label = "Teil von"];
+    Agile_IT -> Agile_Enterprise[label = "Teil von"];
+}
+----
