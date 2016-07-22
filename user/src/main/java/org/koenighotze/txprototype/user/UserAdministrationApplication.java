@@ -5,14 +5,11 @@ import org.koenighotze.txprototype.user.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-@EnableDiscoveryClient
-//@EnableFeignClients
 public class UserAdministrationApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserAdministrationApplication.class, args);
@@ -23,6 +20,19 @@ public class UserAdministrationApplication {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
+
+//    @Bean
+//    public LayoutDialect layoutDialect() {
+//        return new LayoutDialect();
+//    }
+
+//    @Bean
+//    public SpringTemplateEngine templateEngine() {
+//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//        templateEngine.setAdditionalDialects(singleton(new LayoutDialect()));
+//        return templateEngine;
+//    }
 
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository) {

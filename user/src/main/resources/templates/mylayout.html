@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">My website</title>
+</head>
+<body>
+    PARENT
+    <br/>
+    CHILD:
+    <br/>
+    <div layout:fragment="content"></div>
+</body>
+</html>

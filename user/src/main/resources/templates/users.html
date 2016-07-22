@@ -1,16 +1,37 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Getting Started: Serving Web Content</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:text="#{users.title}">[users]</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="David Schmitz"/>
+
+    <meta charset="utf-8"/>
+
+    <link th:href="@{/bootstrap/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/bootstrap/sidebar.css}" rel="stylesheet"/>
 </head>
 <body>
+
+<div>
+    <div th:if="${message}" th:text="#{${message}}"/>
+</div>
+
+
 <ul class="users">
-  <li th:each="user : ${users}">
-    <a th:href="@{${user._2}}">
-      <span class="id" th:text="${user._1.firstname + ' ' + user._1.lastname}"></span>
-    </a>
-  </li>
+    <li th:each="user : ${users}">
+        <a th:href="@{${user._2}}">
+            <span class="id" th:text="${user._1.firstname + ' ' + user._1.lastname}"></span>
+        </a>
+    </li>
 </ul>
+
+<script th:src="@{/js/jquery-1.11.3.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
+
 </body>
 </html>

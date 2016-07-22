@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{user.create}">[username]</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<!--<form action="#" th:action="@{/seedstartermng}" th:object="${seedStarter}" method="post">-->
+<form th:action="@{${self}}" th:object="${user}" th:method="post">
+    <div class="form-group">
+        <label for="username" th:text="#{user.username}">[username]</label>
+        <input type="text" class="form-control" id="username" th:value="${user.username}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="firstname" th:text="#{user.firstname}">[firstname]</label>
+        <input type="text" class="form-control" id="firstname" th:value="${user.firstname}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="lastname" th:text="#{user.lastname}">[lastname]</label>
+        <input type="text" class="form-control" id="lastname" th:value="${user.lastname}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="email" th:text="#{user.email}">[email]</label>
+        <input type="email" class="form-control" id="email" th:value="${user.email}"/>
+    </div>
+
+
+
+    <button th:text="#{user.create}"></button>
+</form>
+
+
+<a th:href="@{${collection}}" th:text="#{user.back}">[back]</a>
+</body>
+</html>
