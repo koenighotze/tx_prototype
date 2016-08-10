@@ -1,9 +1,11 @@
-package org.koenighotze.txprototype.user.controller;
+package org.koenighotze.txprototype.user.resources;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.koenighotze.txprototype.user.controller.UserRestController;
 import org.koenighotze.txprototype.user.model.User;
 import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 
 import static java.util.Objects.requireNonNull;
 import static org.koenighotze.txprototype.user.controller.IanaRel.COLLECTION;
@@ -19,7 +21,9 @@ public class UserResource extends ResourceSupport {
     @JsonCreator
     public UserResource(@JsonProperty("user") User user) {
         this.user = requireNonNull(user);
-        add(linkTo(methodOn(UserRestController.class).getAllUsers()).withRel(COLLECTION.getRel()));
+//        add(linkTo(methodOn(UserRestController.class).newUser(null)).withRel("new"));
+//        add(linkTo(methodOn(UserRestController.class).newUser(UUID.randomUUID().toString(), null)).withRel("new"));
+        add(ControllerLinkBuilder.linkTo(methodOn(UserRestController.class).getAllUsers()).withRel(COLLECTION.getRel()));
         add(linkTo(methodOn(UserRestController.class, user.getUserId()).userByPublicId(user.getPublicId())).withSelfRel());
     }
 

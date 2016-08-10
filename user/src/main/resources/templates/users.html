@@ -3,7 +3,6 @@
 <head>
     <title th:text="#{users.title}">[users]</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -16,22 +15,44 @@
     <link th:href="@{/bootstrap/sidebar.css}" rel="stylesheet"/>
 </head>
 <body>
+    <div class="container">
+        <header class="header">
+            <ol class="breadcrumb text-right">
+                <li>Home</li>
+                <li>Users</li>
+            </ol>
 
-<div>
-    <div th:if="${message}" th:text="#{${message}}"/>
-</div>
+            <nav role="navigation">
+                <ul class="nav nav-pills pull-right">
+                    <li><a href="/">Home</a></li>
+                </ul>
+            </nav>
+            <span class="logo"></span>
+        </header>
+
+        <main role="main">
+            <h2>Listing users</h2>
+            <div>
+                <div th:if="${message}" th:text="#{${message}}"/>
+            </div>
 
 
-<ul class="users">
-    <li th:each="user : ${users}">
-        <a th:href="@{${user._2}}">
-            <span class="id" th:text="${user._1.firstname + ' ' + user._1.lastname}"></span>
-        </a>
-    </li>
-</ul>
+            <a th:href="@{${create}}">
+                <button th:text="#{user.create}">[new]</button>
+            </a>
 
-<script th:src="@{/js/jquery-1.11.3.js}"></script>
-<script th:src="@{/js/bootstrap.js}"></script>
+            <ul class="users">
+                <li th:each="user : ${users}">
+                    <a th:href="@{${user._2}}">
+                        <span class="id" th:text="${user._1.firstname + ' ' + user._1.lastname}"></span>
+                    </a>
+                </li>
+            </ul>
+        </main>
+    </div> <!-- /container -->
 
+
+    <script th:src="@{/js/jquery-1.11.3.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
 </body>
 </html>

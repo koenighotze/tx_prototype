@@ -21,19 +21,6 @@ public class UserAdministrationApplication {
         return new RestTemplate();
     }
 
-
-//    @Bean
-//    public LayoutDialect layoutDialect() {
-//        return new LayoutDialect();
-//    }
-
-//    @Bean
-//    public SpringTemplateEngine templateEngine() {
-//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-//        templateEngine.setAdditionalDialects(singleton(new LayoutDialect()));
-//        return templateEngine;
-//    }
-
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return evt -> {

@@ -18,8 +18,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
-import java.util.Arrays;
 
+import static java.util.Arrays.stream;
 import static java.util.UUID.randomUUID;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.hamcrest.Matchers.endsWith;
@@ -27,6 +27,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -56,7 +57,7 @@ public class UserRestControllerTest {
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
         mappingJackson2HttpMessageConverter =
-            Arrays.asList(converters).stream().filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter).findAny().get();
+            stream(converters).filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter).findAny().get();
     }
 
     @Before
@@ -68,7 +69,7 @@ public class UserRestControllerTest {
     public void users_can_be_fetched() throws Exception {
         //@formatter:off
         mockMvc
-            .perform(get("/users"))
+            .perform(get("/getUsers"))
             .andExpect(status().isOk());
          //@formatter:on
     }
@@ -77,7 +78,7 @@ public class UserRestControllerTest {
     public void the_users_list_is_prefilled() throws Exception {
         //@formatter:off
         mockMvc
-            .perform(get("/users"))
+            .perform(get("/getUsers"))
             .andExpect(content().contentType(APPLICATION_JSON_UTF8))
             .andExpect(jsonPath("$.length()", is(greaterThanOrEqualTo(3))));
         //@formatter:on
@@ -89,12 +90,12 @@ public class UserRestControllerTest {
 
         //@formatter:off
         mockMvc
-            .perform(get("/users/" + user.getPublicId()))
+            .perform(get("/getUsers/" + user.getPublicId()))
             .andExpect(content().contentType(APPLICATION_JSON_UTF8))
             .andExpect(jsonPath("$.user.firstname", is("first")))
             .andExpect(jsonPath("$.user.publicId", is("23")))
-            .andExpect(jsonPath("$._links.collection.href", endsWith("/users")))
-            .andExpect(jsonPath("$._links.self.href", endsWith("/users/" + user.getPublicId())));
+            .andExpect(jsonPath("$._links.collection.href", endsWith("/getUsers")))
+            .andExpect(jsonPath("$._links.self.href", endsWith("/getUsers/" + user.getPublicId())));
         //@formatter:on
     }
 
@@ -103,11 +104,11 @@ public class UserRestControllerTest {
         User user = userRepository.save(new User("23", "first", "last", "flast", "foo@bar.de"));
         //@formatter:off
         mockMvc
-            .perform(delete("/users/{id}", user.getPublicId()))
-            .andExpect(status().isOk());
+            .perform(delete("/getUsers/{id}", user.getPublicId()))
+            .andExpect(status().is(PERMANENT_REDIRECT.value()));
 
         mockMvc
-            .perform(get("/users/{id}", user.getPublicId()))
+            .perform(get("/getUsers/{id}", user.getPublicId()))
             .andExpect(status().is(NOT_FOUND.value()));
         //@formatter:on
     }
@@ -118,7 +119,7 @@ public class UserRestControllerTest {
 
         //@formatter:off
         mockMvc
-            .perform(put("/users/{id}", user.getPublicId())
+            .perform(put("/getUsers/{id}", user.getPublicId())
               .contentType(APPLICATION_JSON)
               .content(json(user))
             )
@@ -138,7 +139,7 @@ public class UserRestControllerTest {
 
         //@formatter:off
         mockMvc
-            .perform(put("/users/{id}", user.getPublicId())
+            .perform(put("/getUsers/{id}", user.getPublicId())
               .contentType(APPLICATION_JSON)
               .content(json(user))
             )
