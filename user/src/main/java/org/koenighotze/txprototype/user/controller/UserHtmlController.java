@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Comparator;
 import java.util.function.Function;
 
@@ -86,7 +88,7 @@ public class UserHtmlController {
 
         return Match(userResourceHttpEntity.getStatusCode()).of(
                 Case($(OK), func),
-                Case($(), "redirect:/getUsers"));
+                Case($(), "redirect:/users"));
     }
 
     @RequestMapping(value = "/{publicId}", method = DELETE, produces = TEXT_HTML_VALUE)
@@ -95,11 +97,14 @@ public class UserHtmlController {
 
         Function<HttpStatus, String> notFoundFunc = status -> {
             redirectAttributes.addFlashAttribute("message", "error.user-not-found");
-            return "redirect:/getUsers";
+            return "redirect:/users";
         };
 
         return Match(response.getStatusCode()).of(
-                Case($(PERMANENT_REDIRECT), "redirect:/getUsers"),
+                Case($(PERMANENT_REDIRECT), status -> {
+                    redirectAttributes.addFlashAttribute("message", "info.user-removed");
+                    return "redirect:/users";
+                }),
                 Case($(NOT_FOUND), notFoundFunc)
         );
     }
@@ -113,7 +118,7 @@ public class UserHtmlController {
     }
 
     @RequestMapping(value = "/new/{publicId}", method = POST)
-    public String createUser(@PathVariable String publicId, User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String createUser(@Valid @NotNull @PathVariable String publicId, @Valid @NotNull User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "new_user";
         }

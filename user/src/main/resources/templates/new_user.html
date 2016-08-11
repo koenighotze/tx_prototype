@@ -3,32 +3,80 @@
 <head>
     <title th:text="#{user.create}">[username]</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="David Schmitz"/>
+
+    <meta charset="utf-8"/>
+
+    <link th:href="@{/bootstrap/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/bootstrap/sidebar.css}" rel="stylesheet"/>
 </head>
 <body>
-<form th:action="@{${self}}" th:object="${user}" th:method="post">
-    <div class="form-group">
-        <label for="username" th:text="#{user.username}">[username]</label>
-        <input type="text" class="form-control" id="username" th:field="*{username}"/>
-    </div>
 
-    <div class="form-group">
-        <label for="firstname" th:text="#{user.firstname}">[firstname]</label>
-        <input type="text" class="form-control" id="firstname" th:field="*{firstname}"/>
-    </div>
 
-    <div class="form-group">
-        <label for="lastname" th:text="#{user.lastname}">[lastname]</label>
-        <input type="text" class="form-control" id="lastname" th:field="*{lastname}"/>
-    </div>
+<div class="container">
+    <header class="header">
+        <ol class="breadcrumb text-right">
+            <li><a th:href="@{/}" th:text="#{user.home}">[home]</a></li>
+            <li><a th:href="@{${collection}}" th:text="#{user.users}">[users]</a></li>
+        </ol>
 
-    <div class="form-group">
-        <label for="email" th:text="#{user.email}">[email]</label>
-        <input type="email" class="form-control" id="email" th:field="*{email}"/>
-    </div>
+        <span class="logo"></span>
+    </header>
 
-    <button th:text="#{user.create}"></button>
-</form>
+    <main role="main">
+        <h2 th:text="#{user.create}">[create]</h2>
+        <form role="form" th:action="@{${self}}" th:object="${user}" th:method="post">
+            <div class="form-group has-feedback" th:classappend="${#fields.hasErrors('username')}? 'has-error'">
+                <label for="username" class="control-label" th:text="#{user.username}">[username]</label>
+                <input type="text" class="form-control" id="username" th:field="*{username}"/>
+                <div th:if="${#fields.hasErrors('username')}">
+                    <p class="help-block" th:errors="*{username}">[errors]</p>
+                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                </div>
+            </div>
 
-<a th:href="@{${collection}}" th:text="#{user.back}">[back]</a>
+            <div class="form-group has-feedback" th:classappend="${#fields.hasErrors('firstname')}? 'has-error'">
+                <label for="firstname" class="control-label" th:text="#{user.firstname}">[firstname]</label>
+                <input type="text" class="form-control" id="firstname" th:field="*{firstname}"/>
+                <div th:if="${#fields.hasErrors('firstname')}">
+                    <p class="help-block" th:errors="*{firstname}">[errors]</p>
+                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group has-feedback" th:classappend="${#fields.hasErrors('lastname')}? 'has-error'">
+                <label for="lastname" class="control-label" th:text="#{user.lastname}">[lastname]</label>
+                <input type="text" class="form-control" id="lastname" th:field="*{lastname}"/>
+                <div th:if="${#fields.hasErrors('lastname')}">
+                    <p class="help-block" th:errors="*{lastname}">[errors]</p>
+                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group has-feedback" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
+                <label for="email" class="control-label" th:text="#{user.email}">[email]</label>
+                <input type="text" class="form-control" id="email" th:field="*{email}"/>
+                <div th:if="${#fields.hasErrors('email')}">
+                    <p class="help-block" th:errors="*{email}">[errors]</p>
+                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div>
+                <a class="btn btn-sm btn-default btn-primary-spacing" th:href="@{${collection}}" role="button"
+                   th:text="#{user.cancel_create}">[cancel_create]</a>
+
+                <button class="btn btn-primary btn-sm" th:text="#{user.create}">[create]</button>
+            </div>
+        </form>
+    </main>
+</div> <!-- /container -->
+
+<script th:src="@{/js/jquery-1.11.3.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
 </body>
 </html>

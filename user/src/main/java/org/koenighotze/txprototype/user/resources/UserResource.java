@@ -21,8 +21,6 @@ public class UserResource extends ResourceSupport {
     @JsonCreator
     public UserResource(@JsonProperty("user") User user) {
         this.user = requireNonNull(user);
-//        add(linkTo(methodOn(UserRestController.class).newUser(null)).withRel("new"));
-//        add(linkTo(methodOn(UserRestController.class).newUser(UUID.randomUUID().toString(), null)).withRel("new"));
         add(ControllerLinkBuilder.linkTo(methodOn(UserRestController.class).getAllUsers()).withRel(COLLECTION.getRel()));
         add(linkTo(methodOn(UserRestController.class, user.getUserId()).userByPublicId(user.getPublicId())).withSelfRel());
     }
