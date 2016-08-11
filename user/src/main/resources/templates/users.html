@@ -1,73 +1,58 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title th:text="#{users.title}">[users]</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout"
+      th:with="title=#{users.title}">
+<th:block layout:fragment="content">
+    <div class="container">
+        <header class="header">
+            <ol class="breadcrumb text-right">
+                <li><a th:href="@{/}" th:text="#{user.home}">[home]</a></li>
+            </ol>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content=""/>
-    <meta name="author" content="David Schmitz"/>
+            <span class="logo"></span>
+        </header>
 
-    <meta charset="utf-8"/>
-
-    <link th:href="@{/bootstrap/bootstrap.css}" rel="stylesheet"/>
-    <link th:href="@{/bootstrap/sidebar.css}" rel="stylesheet"/>
-</head>
-<body>
-<div class="container">
-    <header class="header">
-        <ol class="breadcrumb text-right">
-            <li><a th:href="@{/}" th:text="#{user.home}">[home]</a></li>
-        </ol>
-
-        <span class="logo"></span>
-    </header>
-
-    <main role="main">
-        <h2>Listing users</h2>
-        <div>
-            <div class="alert alert-info" th:if="${message}" th:text="#{${message}}">
+        <main role="main">
+            <h2>Listing users</h2>
+            <div>
+                <div class="alert alert-info" th:if="${message}" th:text="#{${message}}">
+                </div>
             </div>
-        </div>
 
 
-        <a th:href="@{${create}}">
-            <button class="btn btn-primary btn-sm" th:text="#{user.create}">[new]</button>
-        </a>
+            <a th:href="@{${create}}">
+                <button class="btn btn-primary btn-sm" th:text="#{user.create}">[new]</button>
+            </a>
 
-        <!-- TODO make responsive -->
-        <table class="table table-hover table-striped">
-            <thead>
-            <tr>
-                <th th:text="#{user.firstname}">[firstname]</th>
-                <th th:text="#{user.lastname}">[lastname]</th>
-                <th th:text="#{user.email}">[email]</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tr th:each="user : ${users}">
-                <td th:text="${user._1.firstname}">[firstname]</td>
-                <td th:text="${user._1.lastname}">[lastname]</td>
-                <td th:text="${user._1.email}">[email]</td>
-                <td>
-                    <a th:href="@{${user._2}}" th:title="#{user.open_user_details}">
-                        <span class="glyphicon glyphicon glyphicon-eye-open"></span>
-                    </a>
-                    <a th:href="@{${user._2}}" th:title="#{user.edit_user}">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                    <a th:href="@{${user._2}}" th:title="#{user.delete}">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                </td>
-            </tr>
-        </table>
-    </main>
-</div> <!-- /container -->
-
-
-<script th:src="@{/js/jquery-1.11.3.js}"></script>
-<script th:src="@{/js/bootstrap.js}"></script>
-</body>
+            <!-- TODO make responsive -->
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th th:text="#{user.firstname}">[firstname]</th>
+                    <th th:text="#{user.lastname}">[lastname]</th>
+                    <th th:text="#{user.email}">[email]</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user._1.firstname}">[firstname]</td>
+                    <td th:text="${user._1.lastname}">[lastname]</td>
+                    <td th:text="${user._1.email}">[email]</td>
+                    <td>
+                        <a th:href="@{${user._2}}" th:title="#{user.open_user_details}">
+                            <span class="glyphicon glyphicon glyphicon-eye-open"></span>
+                        </a>
+                        <a th:href="@{${user._2}}" th:title="#{user.edit_user}">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a th:href="@{${user._2}}" th:title="#{user.delete}">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </main>
+    </div>
+</th:block>
 </html>
