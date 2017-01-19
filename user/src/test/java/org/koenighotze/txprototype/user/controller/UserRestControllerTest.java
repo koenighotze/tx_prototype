@@ -1,5 +1,25 @@
 package org.koenighotze.txprototype.user.controller;
 
+import static java.util.Arrays.stream;
+import static java.util.UUID.randomUUID;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,26 +36,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.io.IOException;
-
-import static java.util.Arrays.stream;
-import static java.util.UUID.randomUUID;
-import static org.fest.assertions.Assertions.assertThat;
-import static org.hamcrest.Matchers.endsWith;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author David Schmitz
@@ -56,31 +56,32 @@ public class UserRestControllerTest {
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
-        mappingJackson2HttpMessageConverter =
-            stream(converters).filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter).findAny().get();
+        mappingJackson2HttpMessageConverter = stream(converters).filter(
+            hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
+                                                                .findAny()
+                                                                .get();
     }
 
     @Before
     public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                                      .build();
     }
 
     @Test
     public void users_can_be_fetched() throws Exception {
         //@formatter:off
-        mockMvc
-            .perform(get("/getUsers"))
-            .andExpect(status().isOk());
-         //@formatter:on
+        mockMvc.perform(get("/getUsers"))
+               .andExpect(status().isOk());
+        //@formatter:on
     }
 
     @Test
     public void the_users_list_is_prefilled() throws Exception {
         //@formatter:off
-        mockMvc
-            .perform(get("/getUsers"))
-            .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-            .andExpect(jsonPath("$.length()", is(greaterThanOrEqualTo(3))));
+        mockMvc.perform(get("/getUsers"))
+               .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+               .andExpect(jsonPath("$.length()", is(greaterThanOrEqualTo(3))));
         //@formatter:on
     }
 
@@ -89,13 +90,12 @@ public class UserRestControllerTest {
         User user = userRepository.save(new User("23", "first", "last", "flast", "foo@bar.de"));
 
         //@formatter:off
-        mockMvc
-            .perform(get("/getUsers/" + user.getPublicId()))
-            .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-            .andExpect(jsonPath("$.user.firstname", is("first")))
-            .andExpect(jsonPath("$.user.publicId", is("23")))
-            .andExpect(jsonPath("$._links.collection.href", endsWith("/getUsers")))
-            .andExpect(jsonPath("$._links.self.href", endsWith("/getUsers/" + user.getPublicId())));
+        mockMvc.perform(get("/getUsers/" + user.getPublicId()))
+               .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+               .andExpect(jsonPath("$.user.firstname", is("first")))
+               .andExpect(jsonPath("$.user.publicId", is("23")))
+               .andExpect(jsonPath("$._links.collection.href", endsWith("/getUsers")))
+               .andExpect(jsonPath("$._links.self.href", endsWith("/getUsers/" + user.getPublicId())));
         //@formatter:on
     }
 
@@ -103,13 +103,11 @@ public class UserRestControllerTest {
     public void deleting_a_user_returns_ok() throws Exception {
         User user = userRepository.save(new User("23", "first", "last", "flast", "foo@bar.de"));
         //@formatter:off
-        mockMvc
-            .perform(delete("/getUsers/{id}", user.getPublicId()))
-            .andExpect(status().is(PERMANENT_REDIRECT.value()));
+        mockMvc.perform(delete("/getUsers/{id}", user.getPublicId()))
+               .andExpect(status().is(PERMANENT_REDIRECT.value()));
 
-        mockMvc
-            .perform(get("/getUsers/{id}", user.getPublicId()))
-            .andExpect(status().is(NOT_FOUND.value()));
+        mockMvc.perform(get("/getUsers/{id}", user.getPublicId()))
+               .andExpect(status().is(NOT_FOUND.value()));
         //@formatter:on
     }
 
@@ -118,12 +116,9 @@ public class UserRestControllerTest {
         User user = new User(randomUUID().toString(), "First", "Last", "nick", "foo@bar.de");
 
         //@formatter:off
-        mockMvc
-            .perform(put("/getUsers/{id}", user.getPublicId())
-              .contentType(APPLICATION_JSON)
-              .content(json(user))
-            )
-            .andExpect(status().is(CREATED.value()));
+        mockMvc.perform(put("/getUsers/{id}", user.getPublicId()).contentType(APPLICATION_JSON)
+                                                                 .content(json(user)))
+               .andExpect(status().is(CREATED.value()));
         //@formatter:on
 
         User found = userRepository.findByPublicId(user.getPublicId());
@@ -138,12 +133,9 @@ public class UserRestControllerTest {
         user.setLastname("updated last name");
 
         //@formatter:off
-        mockMvc
-            .perform(put("/getUsers/{id}", user.getPublicId())
-              .contentType(APPLICATION_JSON)
-              .content(json(user))
-            )
-            .andExpect(status().isOk());
+        mockMvc.perform(put("/getUsers/{id}", user.getPublicId()).contentType(APPLICATION_JSON)
+                                                                 .content(json(user)))
+               .andExpect(status().isOk());
         //@formatter:on
 
         User found = userRepository.findByPublicId(user.getPublicId());

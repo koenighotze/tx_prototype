@@ -1,6 +1,6 @@
 package org.koenighotze.txprototype.user.repository;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.inject.Inject;
 
