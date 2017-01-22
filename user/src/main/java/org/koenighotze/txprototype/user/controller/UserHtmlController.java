@@ -1,31 +1,11 @@
 package org.koenighotze.txprototype.user.controller;
 
-import javaslang.Tuple;
-import javaslang.collection.Stream;
-import org.koenighotze.txprototype.user.model.User;
-import org.koenighotze.txprototype.user.resources.UserResource;
-import org.koenighotze.txprototype.user.resources.UsersResource;
-import org.springframework.hateoas.ResourceSupport;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.inject.Inject;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.Comparator;
-import java.util.function.Function;
-
-import static java.util.Comparator.comparing;
 import static javaslang.API.$;
 import static javaslang.API.Case;
 import static javaslang.API.Match;
 import static org.koenighotze.txprototype.user.controller.IanaRel.COLLECTION;
+import static org.koenighotze.txprototype.user.resources.ResourceUtils.addLinksToModel;
+import static org.koenighotze.txprototype.user.resources.UserResource.compareByLastAndFirstName;
 import static org.springframework.hateoas.Link.REL_SELF;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
@@ -34,6 +14,25 @@ import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+import java.util.function.Function;
+import javax.inject.Inject;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import javaslang.Tuple;
+import javaslang.collection.Stream;
+import org.koenighotze.txprototype.user.model.User;
+import org.koenighotze.txprototype.user.resources.UserResource;
+import org.koenighotze.txprototype.user.resources.UsersResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * @author David Schmitz
@@ -61,18 +60,6 @@ public class UserHtmlController {
         addLinksToModel(allUsers, model);
         //@formatter:on
         return "users";
-    }
-
-    private Comparator<UserResource> compareByLastAndFirstName() {
-        //@formatter:off
-        return comparing((UserResource user) -> user.getUser().getLastname())
-                .thenComparing((UserResource user) -> user.getUser().getFirstname());
-        //@formatter:on
-    }
-
-    private Model addLinksToModel(ResourceSupport resource, Model model) {
-        resource.getLinks().forEach(link -> model.addAttribute(link.getRel(), link.getHref()));
-        return model;
     }
 
     @RequestMapping(value = "/{publicId}", method = GET)

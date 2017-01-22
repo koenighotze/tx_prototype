@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout"
+      th:with="title=#{application.title}">
+<th:block layout:fragment="content">
+    <div class="container">
+        <header class="header">
+            <ol class="breadcrumb text-right">
+                <li><a th:href="@{/}" th:text="#{user.home}">[home]</a></li>
+            </ol>
+
+            <span class="logo"></span>
+        </header>
+
+        <main role="main">
+          <h2 th:text="#{home.welcome}">[welcome]</h2>
+          <p th:text="#{home.intro}">[intro]</p>
+        </main>
+    </div>
+</th:block>
+</html>
