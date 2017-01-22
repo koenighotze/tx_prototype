@@ -9,6 +9,9 @@ spring:
       host: localhost
       database: user
       port: 27017
+  jackson:
+    serialization:
+      indent_output: true
 
 logging:
   level:

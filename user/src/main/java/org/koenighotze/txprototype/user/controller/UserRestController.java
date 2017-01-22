@@ -1,23 +1,5 @@
 package org.koenighotze.txprototype.user.controller;
 
-import javaslang.collection.Stream;
-import javaslang.control.Option;
-import org.koenighotze.txprototype.user.model.User;
-import org.koenighotze.txprototype.user.repository.UserRepository;
-import org.koenighotze.txprototype.user.resources.UserResource;
-import org.koenighotze.txprototype.user.resources.UsersResource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.inject.Inject;
-import java.net.URI;
-
 import static javaslang.API.$;
 import static javaslang.API.Case;
 import static javaslang.API.Match;
@@ -33,6 +15,24 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+
+import java.net.URI;
+import javax.inject.Inject;
+
+import javaslang.collection.List;
+import javaslang.control.Option;
+import org.koenighotze.txprototype.user.model.User;
+import org.koenighotze.txprototype.user.repository.UserRepository;
+import org.koenighotze.txprototype.user.resources.UserResource;
+import org.koenighotze.txprototype.user.resources.UsersResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author David Schmitz
@@ -52,14 +52,13 @@ public class UserRestController {
     public HttpEntity<UsersResource> getAllUsers() {
         //@formatter:off
         return new ResponseEntity<>(
-                new UsersResource(Stream
-                        .ofAll(userRepository.findAll())
-                        .map(UserResource::new)
-                        .toJavaList()), OK);
+                new UsersResource(List.ofAll(userRepository.findAll())
+                        .map(UserResource::new)), OK);
         //@formatter:on
     }
 
-    @RequestMapping(value = "/new/{publicId}", method = PUT, consumes = APPLICATION_JSON_UTF8_VALUE)
+    // example PUT for creating resource
+    @RequestMapping(value = "/{publicId}", method = PUT, consumes = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<UserResource> newUser(@PathVariable String publicId, @RequestBody User user) {
         //@formatter:off
         User userToStore = Option.of(userRepository.findByPublicId(publicId))

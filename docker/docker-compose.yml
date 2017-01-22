@@ -1,3 +1,5 @@
+# Todo: why does this file fail with the new docker version?
+
 version: "2"
 
 services:
