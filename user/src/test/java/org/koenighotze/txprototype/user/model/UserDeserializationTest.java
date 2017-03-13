@@ -11,11 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.client.MockClientHttpResponse;
 
-
-/**
- * @author David Schmitz
- */
-public class UserDeserialisationTest {
+public class UserDeserializationTest {
 
     @Test
     public void deserialize_json() throws IOException {

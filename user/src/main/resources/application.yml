@@ -1,22 +1,12 @@
-#debug=true
-
 server:
   port: 8087
-#logging.file=user.log
 
 spring:
   data:
     mongodb:
-      host: 192.168.99.100
+      host: localhost
       database: user
       port: 27017
-
-logging:
-  level:
-    org:
-      springframework:
-        web:
-          client: DEBUG
 
 security:
   user:

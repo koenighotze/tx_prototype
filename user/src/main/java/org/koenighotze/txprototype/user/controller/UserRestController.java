@@ -1,26 +1,5 @@
 package org.koenighotze.txprototype.user.controller;
 
-import javaslang.Tuple;
-import javaslang.collection.Stream;
-import javaslang.control.Option;
-import org.koenighotze.txprototype.user.model.User;
-import org.koenighotze.txprototype.user.repository.UserRepository;
-import org.springframework.hateoas.Link;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.inject.Inject;
-import java.net.URI;
-import java.util.Comparator;
-import java.util.List;
-
 import static java.util.Comparator.comparing;
 import static javaslang.API.$;
 import static javaslang.API.Case;
@@ -36,6 +15,27 @@ import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+
+import java.net.URI;
+import java.util.Comparator;
+import java.util.List;
+import javax.inject.Inject;
+
+import javaslang.Tuple;
+import javaslang.collection.Stream;
+import javaslang.control.Option;
+import org.koenighotze.txprototype.user.model.User;
+import org.koenighotze.txprototype.user.repository.UserRepository;
+import org.springframework.hateoas.Link;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author David Schmitz

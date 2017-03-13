@@ -1,7 +1,6 @@
 package org.koenighotze.txprototype.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.annotation.Id;
 
@@ -83,6 +82,7 @@ public class User {
     @Override
     public String toString() {
         return new ToStringBuilder(this).append("id", userId)
+                .append("publicId", publicId)
                 .append("username", username)
                 .append("email", email)
                 .append("firstname", firstname)

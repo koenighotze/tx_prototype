@@ -1,6 +1,7 @@
 package org.koenighotze.txprototype.user.repository;
 
-import static org.fest.assertions.Assertions.assertThat;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import javax.inject.Inject;
 
@@ -8,14 +9,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.koenighotze.txprototype.user.UserAdministrationApplication;
 import org.koenighotze.txprototype.user.model.User;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author David Schmitz
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = UserAdministrationApplication.class)
+@SpringBootTest(classes = UserAdministrationApplication.class)
 public class UserRepositoryTest {
     @Inject
     private UserRepository userRepository;
@@ -33,6 +34,5 @@ public class UserRepositoryTest {
         User found = userRepository.findOne(saved.getUserId());
 
         assertThat(found).isNotNull();
-
     }
 }

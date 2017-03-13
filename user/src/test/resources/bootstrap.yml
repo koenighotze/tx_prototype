@@ -3,5 +3,6 @@ spring:
     name: UserAdministration
   cloud:
     consul:
-      host: localhost
-      port: 8500
+      config:
+        enabled: false
+      enabled: false
