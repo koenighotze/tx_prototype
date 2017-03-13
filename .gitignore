@@ -17,3 +17,4 @@ fragen.txt
 *.log
 .DS_Store
 volumes
+npm-debug*
