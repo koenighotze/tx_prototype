@@ -71,12 +71,12 @@ public class UserRestController {
                 .getOrElse(user);
         //@formatter:on
 
+        HttpStatus status = Option.of(userToStore.getUserId()).map(id -> OK).getOrElse(CREATED);
+        userRepository.save(userToStore);
+
         UserResource userResource = new UserResource(userToStore);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(URI.create(userResource.getLink(REL_SELF).getHref()));
-
-        HttpStatus status = Option.of(userToStore.getUserId()).map(id -> OK).getOrElse(CREATED);
-        userRepository.save(userToStore);
 
         return new ResponseEntity<>(userResource, httpHeaders, status);
     }
@@ -117,5 +117,6 @@ public class UserRestController {
         );
         //@formatter:on
     }
+
 
 }

@@ -98,8 +98,7 @@ public class User {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", userId)
+        return new ToStringBuilder(this).append("id", userId)
                 .append("publicId", publicId)
                 .append("username", username)
                 .append("email", email)

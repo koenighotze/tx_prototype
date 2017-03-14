@@ -13,6 +13,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,7 +36,6 @@ import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
@@ -79,7 +79,8 @@ public class UserRestControllerTest {
     @Test
     public void the_users_list_is_prefilled() throws Exception {
         //@formatter:off
-        mockMvc.perform(get("/users")).andDo(MockMvcResultHandlers.print())
+        mockMvc.perform(get("/users"))
+               .andDo(log())
                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                .andExpect(jsonPath("$.users.length()", is(greaterThanOrEqualTo(3))));
         //@formatter:on
@@ -91,7 +92,7 @@ public class UserRestControllerTest {
 
         //@formatter:off
         mockMvc.perform(get("/users/" + user.getPublicId()))
-               .andDo(MockMvcResultHandlers.print())
+               .andDo(log())
                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                .andExpect(jsonPath("$.user.firstname", is("first")))
                .andExpect(jsonPath("$.user.publicId", is("23")))
