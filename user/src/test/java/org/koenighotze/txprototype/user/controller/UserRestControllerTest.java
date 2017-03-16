@@ -65,7 +65,7 @@ public class UserRestControllerTest {
 
     @Before
     public void setup() {
-        this.mockMvc = webAppContextSetup(webApplicationContext).build();
+        mockMvc = webAppContextSetup(webApplicationContext).build();
     }
 
     @Test
