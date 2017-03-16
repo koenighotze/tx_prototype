@@ -1,8 +1,34 @@
-# Todo: why does this file fail with the new docker version?
-
 version: "2"
 
 services:
+  influxdb:
+    image: influxdb:1.1.4-alpine
+    ports:
+      - "8086:8086"
+      #- "2003:2003"
+
+#INFLUXDB_REPORTING_DISABLED=true
+#INFLUXDB_META_DIR=/path/to/metadir
+#INFLUXDB_DATA_QUERY_LOG_ENABLED=false
+
+  eventstore:
+    image: eventstore/eventstore
+    ports:
+      - "2113:2113"
+      - "1113:1113"
+
+  riakts:
+    image: basho/riak-ts
+    ports:
+      - "8087:8087"
+      - "8098:8098"
+
+#  riakkv:
+#      image: basho/riak-kv
+#      ports:
+#        - "8097:8087"
+#        - "8099:8098"
+
   mongodb:
     container_name: mongodb
     image: mongo:3.2.4
@@ -11,17 +37,17 @@ services:
     ports:
       - "27017:27017"
 
-  consul:
-    container_name: consul
-    image: progrium/consul
-    command: -server -bootstrap -ui-dir /ui
-    volumes:
-        - consul-data:/data
-    ports:
-      - "8500:8500"
-      - "8600:8600"
-      - "8400:8400"
-      - "8600:53/udp"
+#  consul:
+#    container_name: consul
+#    image: progrium/consul
+#    command: -server -bootstrap -ui-dir /ui
+#    volumes:
+#        - consul-data:/data
+#    ports:
+#      - "8500:8500"
+#      - "8600:8600"
+#      - "8400:8400"
+#      - "8600:53/udp"
 
 volumes:
     mongodb-data:
