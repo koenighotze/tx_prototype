@@ -1,16 +1,22 @@
 package org.koenighotze.txprototype.user;
 
-import javaslang.jackson.datatype.JavaslangModule;
-import org.koenighotze.txprototype.user.model.User;
-import org.koenighotze.txprototype.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.web.client.RestTemplate;
+import static org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG;
+import static org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG;
+import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_DOC;
+
+import java.util.*;
+
+import com.fasterxml.jackson.databind.*;
+import javaslang.jackson.datatype.*;
+import org.apache.kafka.common.serialization.*;
+import org.koenighotze.txprototype.user.model.*;
+import org.koenighotze.txprototype.user.repository.*;
+import org.springframework.boot.*;
+import org.springframework.boot.autoconfigure.*;
+import org.springframework.context.annotation.*;
+import org.springframework.kafka.core.*;
+import org.springframework.kafka.support.serializer.JsonSerializer;
+import org.springframework.web.client.*;
 
 @SpringBootApplication
 public class UserAdministrationApplication {
@@ -19,7 +25,31 @@ public class UserAdministrationApplication {
     }
 
     @Bean
-    @LoadBalanced
+    public ProducerFactory<String, String> producerFactory() {
+        DefaultKafkaProducerFactory<String, String> factory = new DefaultKafkaProducerFactory<>(producerConfigs());
+
+        factory.setKeySerializer(new StringSerializer());
+        factory.setValueSerializer(new JsonSerializer<>());
+
+        return factory;
+    }
+
+    @Bean
+    public Map<String, Object> producerConfigs() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
+        props.put(VALUE_SERIALIZER_CLASS_DOC, "org.apache.kafka.common.serialization.StringDeserializer");
+        return props;
+    }
+
+    @Bean
+    public KafkaTemplate<String, String> kafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
+    }
+
+    @Bean
+    //    @LoadBalanced
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
@@ -34,8 +64,8 @@ public class UserAdministrationApplication {
         };
     }
 
-    @Autowired
-    public void configureJackson(Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder) {
-        jackson2ObjectMapperBuilder.modulesToInstall(JavaslangModule.class);
+    @Bean
+    public static Module javaslangModule() {
+        return new JavaslangModule();
     }
 }

@@ -1,4 +1,4 @@
-package org.koenighotze.txprototype.user.controller;
+package org.koenighotze.txprototype.user.controller.user;
 
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;

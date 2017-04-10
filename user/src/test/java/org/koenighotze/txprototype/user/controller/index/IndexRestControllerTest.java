@@ -1,4 +1,4 @@
-package org.koenighotze.txprototype.user.controller;
+package org.koenighotze.txprototype.user.controller.index;
 
 import static org.hamcrest.Matchers.endsWith;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;

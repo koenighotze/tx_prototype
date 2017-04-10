@@ -1,17 +1,11 @@
 package org.koenighotze.txprototype.user.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.springframework.data.annotation.Id;
+import javax.validation.constraints.*;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.*;
+import org.apache.commons.lang3.builder.*;
+import org.springframework.data.annotation.*;
 
-/**
- * Represents a user.
- *
- * @author David Schmitz
- */
 public class User {
     @Id
     @JsonIgnore

@@ -10,13 +10,10 @@ import java.util.Comparator;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.koenighotze.txprototype.user.controller.UserRestController;
+import org.koenighotze.txprototype.user.controller.user.UserRestController;
 import org.koenighotze.txprototype.user.model.User;
 import org.springframework.hateoas.ResourceSupport;
 
-/**
- * @author David Schmitz
- */
 public class UserResource extends ResourceSupport {
     private User user;
 

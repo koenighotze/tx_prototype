@@ -1,4 +1,4 @@
-package org.koenighotze.txprototype.user.controller;
+package org.koenighotze.txprototype.user.controller.user;
 
 import static javaslang.API.$;
 import static javaslang.API.Case;
@@ -15,28 +15,22 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.util.function.Function;
-import javax.inject.Inject;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.util.function.*;
+import javax.inject.*;
+import javax.validation.*;
+import javax.validation.constraints.*;
 
-import javaslang.Tuple;
-import javaslang.collection.Stream;
-import org.koenighotze.txprototype.user.model.User;
-import org.koenighotze.txprototype.user.resources.UserResource;
-import org.koenighotze.txprototype.user.resources.UsersResource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import javaslang.*;
+import javaslang.collection.*;
+import org.koenighotze.txprototype.user.model.*;
+import org.koenighotze.txprototype.user.resources.*;
+import org.springframework.http.*;
+import org.springframework.stereotype.*;
+import org.springframework.ui.*;
+import org.springframework.validation.*;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.*;
 
-/**
- * @author David Schmitz
- */
 @Controller
 @RequestMapping(value = "/users", produces = TEXT_HTML_VALUE)
 public class UserHtmlController {

@@ -1,8 +1,5 @@
 package org.koenighotze.txprototype.user.controller;
 
-/**
- * @author David Schmitz
- */
 public enum IanaRel {
     EDIT("edit"),
     COLLECTION("collection"),

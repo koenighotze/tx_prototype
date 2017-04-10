@@ -1,14 +1,13 @@
 package org.koenighotze.txprototype.user.model;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
+import java.io.*;
 
-import org.junit.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.mock.http.client.MockClientHttpResponse;
+import org.junit.*;
+import org.springframework.http.*;
+import org.springframework.http.converter.json.*;
+import org.springframework.mock.http.client.*;
 
 /**
  * @author David Schmitz

@@ -4,13 +4,10 @@ import static java.util.UUID.randomUUID;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import javaslang.collection.List;
-import org.koenighotze.txprototype.user.controller.UserRestController;
-import org.springframework.hateoas.ResourceSupport;
+import javaslang.collection.*;
+import org.koenighotze.txprototype.user.controller.user.*;
+import org.springframework.hateoas.*;
 
-/**
- * @author David Schmitz
- */
 public class UsersResource extends ResourceSupport {
     private final List<UserResource> users;
 
