@@ -1,7 +1,8 @@
 package org.koenighotze.txprototype.livefeed.repository;
 
-/**
- * @author David Schmitz
- */
-public class UserReadModelRepository {
+import org.koenighotze.txprototype.livefeed.model.*;
+import org.springframework.data.mongodb.repository.*;
+
+public interface UserReadModelRepository extends MongoRepository<UserReadModel, String> {
+
 }

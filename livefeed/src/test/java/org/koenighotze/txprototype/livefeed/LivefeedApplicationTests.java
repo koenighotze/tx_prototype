@@ -1,18 +1,20 @@
 package org.koenighotze.txprototype.livefeed;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
+
+import org.junit.*;
+import org.junit.runner.*;
+import org.springframework.boot.test.context.*;
+import org.springframework.test.annotation.*;
+import org.springframework.test.context.junit4.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = LivefeedApplication.class)
-@WebAppConfiguration
+@SpringBootTest(webEnvironment = DEFINED_PORT, classes = {LivefeedApplication.class})
+@DirtiesContext
 public class LivefeedApplicationTests {
 
-	@Test
-	public void contextLoads() {
-	}
+    @Test
+    public void contextLoads() {
+    }
 
 }

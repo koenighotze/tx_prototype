@@ -1,8 +1,11 @@
 server:
   port: 8098
 
-spring:
+management:
+  security:
+    enabled: false
 
+spring:
   data:
     mongodb:
       host: localhost

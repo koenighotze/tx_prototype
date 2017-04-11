@@ -18,3 +18,4 @@ fragen.txt
 .DS_Store
 volumes
 npm-debug*
+*.log.*
