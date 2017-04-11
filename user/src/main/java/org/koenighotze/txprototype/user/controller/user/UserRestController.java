@@ -21,6 +21,7 @@ import javax.inject.*;
 
 import javaslang.collection.*;
 import javaslang.control.*;
+import org.koenighotze.txprototype.user.events.*;
 import org.koenighotze.txprototype.user.model.*;
 import org.koenighotze.txprototype.user.repository.*;
 import org.koenighotze.txprototype.user.resources.*;
@@ -33,10 +34,10 @@ import org.springframework.web.bind.annotation.*;
 public class UserRestController {
 
     private final UserRepository userRepository;
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, UserCreatedEvent> kafkaTemplate;
 
     @Inject
-    public UserRestController(UserRepository userRepository, KafkaTemplate<String, String> kafkaTemplate) {
+    public UserRestController(UserRepository userRepository, KafkaTemplate<String, UserCreatedEvent> kafkaTemplate) {
         this.userRepository = userRepository;
         this.kafkaTemplate = kafkaTemplate;
     }
@@ -69,7 +70,7 @@ public class UserRestController {
                                   .getOrElse(CREATED);
         userRepository.save(userToStore);
 
-        kafkaTemplate.send("users", userToStore.toString());
+        kafkaTemplate.send("users", UserCreatedEvent.createdNow(user));
 
         UserResource userResource = new UserResource(userToStore);
         HttpHeaders httpHeaders = new HttpHeaders();

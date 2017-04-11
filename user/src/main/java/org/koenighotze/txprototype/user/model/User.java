@@ -31,6 +31,9 @@ public class User {
     @NotNull
     private String email;
 
+
+    // Ts meta data
+
     public User() {
     }
 

@@ -1,14 +1,14 @@
 package org.koenighotze.txprototype.user;
 
 import static org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG;
-import static org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG;
-import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_DOC;
 
 import java.util.*;
 
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.datatype.jsr310.*;
 import javaslang.jackson.datatype.*;
 import org.apache.kafka.common.serialization.*;
+import org.koenighotze.txprototype.user.events.*;
 import org.koenighotze.txprototype.user.model.*;
 import org.koenighotze.txprototype.user.repository.*;
 import org.springframework.boot.*;
@@ -25,11 +25,11 @@ public class UserAdministrationApplication {
     }
 
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
-        DefaultKafkaProducerFactory<String, String> factory = new DefaultKafkaProducerFactory<>(producerConfigs());
+    public ProducerFactory<String, UserCreatedEvent> producerFactory(ObjectMapper objectMapper) {
+        DefaultKafkaProducerFactory<String, UserCreatedEvent> factory = new DefaultKafkaProducerFactory<>(producerConfigs());
 
         factory.setKeySerializer(new StringSerializer());
-        factory.setValueSerializer(new JsonSerializer<>());
+        factory.setValueSerializer(new JsonSerializer<>(objectMapper));
 
         return factory;
     }
@@ -38,14 +38,14 @@ public class UserAdministrationApplication {
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        props.put(KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put(VALUE_SERIALIZER_CLASS_DOC, "org.apache.kafka.common.serialization.StringDeserializer");
+//        props.put(KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
+//        props.put(VALUE_SERIALIZER_CLASS_DOC, "org.apache.kafka.common.serialization.StringDeserializer");
         return props;
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+    public KafkaTemplate<String, UserCreatedEvent> kafkaTemplate(ObjectMapper objectMapper) {
+        return new KafkaTemplate<>(producerFactory(objectMapper));
     }
 
     @Bean
@@ -67,5 +67,10 @@ public class UserAdministrationApplication {
     @Bean
     public static Module javaslangModule() {
         return new JavaslangModule();
+    }
+
+    @Bean
+    public static Module jsr310Module() {
+        return new JavaTimeModule();
     }
 }
