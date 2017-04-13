@@ -8,9 +8,9 @@
   <include resource="org/springframework/boot/logging/logback/file-appender.xml"/>
 
   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>INFO</level>
-    </filter>
+    <!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+      <!--<level>INFO</level>-->
+    <!--</filter>-->
     <encoder>
       <pattern>${CONSOLE_LOG_PATTERN}</pattern>
       <charset>utf8</charset>
@@ -22,5 +22,6 @@
     <appender-ref ref="CONSOLE"/>
   </root>
 
+  <logger name="org.springframework.boot.autoconfigure.security.oauth2" level="DEBUG"/>
   <logger name="org.koenighotze" level="DEBUG"/>
 </configuration>

@@ -14,6 +14,7 @@ import org.apache.kafka.common.serialization.*;
 import org.koenighotze.txprototype.livefeed.events.*;
 import org.koenighotze.txprototype.livefeed.repository.*;
 import org.slf4j.*;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.context.annotation.*;
@@ -27,6 +28,12 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 @SpringBootApplication
 public class LivefeedApplication {
     private static final Logger logger = getLogger(LivefeedApplication.class);
+
+    @Value("${kafka.bootstrapServersConfig}")
+    private String bootstrapServersConfig;
+
+    @Value("${kafka.groupId}")
+    private String groupId;
 
     @Bean
     public static Module javaslangModule() {
@@ -64,8 +71,8 @@ public class LivefeedApplication {
     @Bean
     public Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>();
-        props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        props.put(GROUP_ID_CONFIG, "livestream");
+        props.put(BOOTSTRAP_SERVERS_CONFIG, bootstrapServersConfig);
+        props.put(GROUP_ID_CONFIG, groupId);
         props.put(AUTO_OFFSET_RESET_CONFIG, "earliest");
         return props;
     }

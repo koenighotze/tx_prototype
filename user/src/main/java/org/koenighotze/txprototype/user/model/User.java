@@ -31,9 +31,6 @@ public class User {
     @NotNull
     private String email;
 
-
-    // Ts meta data
-
     public User() {
     }
 
@@ -96,11 +93,11 @@ public class User {
     @Override
     public String toString() {
         return new ToStringBuilder(this).append("id", userId)
-                .append("publicId", publicId)
-                .append("username", username)
-                .append("email", email)
-                .append("firstname", firstname)
-                .append("lastname", lastname)
-                .toString();
+                                        .append("publicId", publicId)
+                                        .append("username", username)
+                                        .append("email", email)
+                                        .append("firstname", firstname)
+                                        .append("lastname", lastname)
+                                        .toString();
     }
 }

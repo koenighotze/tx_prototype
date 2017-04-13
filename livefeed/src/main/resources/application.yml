@@ -21,3 +21,7 @@ logging:
   config: classpath:logback-spring.xml
 
 debug: true
+
+kafka:
+  bootstrapServersConfig: localhost:9092
+  groupId: livefeed
