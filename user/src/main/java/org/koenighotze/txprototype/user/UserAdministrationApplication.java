@@ -16,19 +16,16 @@ import org.koenighotze.txprototype.user.repository.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
-import org.springframework.boot.autoconfigure.security.oauth2.client.*;
 import org.springframework.context.annotation.*;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import org.springframework.security.config.annotation.web.builders.*;
-import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.*;
 
 @SpringBootApplication
-@EnableOAuth2Sso
+//@EnableOAuth2Sso
 @RestController
-public class UserAdministrationApplication extends WebSecurityConfigurerAdapter {
+public class UserAdministrationApplication { // extends WebSecurityConfigurerAdapter {
     public static void main(String[] args) {
         SpringApplication.run(UserAdministrationApplication.class, args);
     }
@@ -81,15 +78,15 @@ public class UserAdministrationApplication extends WebSecurityConfigurerAdapter 
         };
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.antMatcher("/**")
-            .authorizeRequests()
-            .antMatchers("/", "/login**")
-            .permitAll()
-            .anyRequest()
-            .authenticated();
-    }
+    //    @Override
+    //    protected void configure(HttpSecurity http) throws Exception {
+    //        http.antMatcher("/**")
+    //            .authorizeRequests()
+    //            .antMatchers("/", "/login**")
+    //            .permitAll()
+    //            .anyRequest()
+    //            .authenticated();
+    //    }
 
     @Bean
     public static Module javaslangModule() {

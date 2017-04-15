@@ -1,0 +1,9 @@
+{
+  "realm": "tx_prototype",
+  "auth-server-url": "http://localhost:8080/auth",
+  "resource": "tx_prototype-user",
+  "credentials": {
+    "secret": "d6f4dbe6-7586-4aad-b248-ac765022fb18"
+  },
+  "principal-attribute": "email"
+}
