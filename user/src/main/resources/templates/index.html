@@ -7,6 +7,18 @@
     <div class="container">
         <header class="header">
             <ol class="breadcrumb text-right">
+                <li>
+                  <div th:if="${userName} == null">
+                    <a th:href="@{/login}">
+                      <button class="btn btn-sm btn-default btn-primary-spacing" th:text="Login"></button>
+                    </a>
+                  </div>
+                  <div th:if="${userName} != null">
+                    <form th:action="@{/logout}" th:method="post">
+                      <button class="btn btn-sm btn-default btn-primary-spacing" th:text="Logout"></button>
+                    </form>
+                  </div>
+                </li>
                 <li><a th:href="@{/}" th:text="#{user.home}">[home]</a></li>
             </ol>
 
@@ -15,13 +27,11 @@
 
         <main role="main">
           <div th:if="${userName} == null">
-            <a th:href="@{/login}">Login</a><br/>
+            <h2 th:text="#{home.welcome}">[welcome]</h2>
           </div>
           <div th:if="${userName} != null">
-            <span th:text="#{home.welcomeUser(${userName})}">[welcome]</span>
-            <a th:href="@{/logout}">Logout</a><br/>
+            <h2 th:text="#{home.welcomeUser(${userName})}">[welcome]</h2>
           </div>
-          <h2 th:text="#{home.welcome}">[welcome]</h2>
           <p th:text="#{home.intro}">[intro]</p>
         </main>
     </div>
