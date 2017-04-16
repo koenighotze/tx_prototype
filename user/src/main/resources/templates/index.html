@@ -14,7 +14,13 @@
         </header>
 
         <main role="main">
-          <a href="/login">Login</a>
+          <div th:if="${userName} == null">
+            <a th:href="@{/login}">Login</a><br/>
+          </div>
+          <div th:if="${userName} != null">
+            <span th:text="#{home.welcomeUser(${userName})}">[welcome]</span>
+            <a th:href="@{/logout}">Logout</a><br/>
+          </div>
           <h2 th:text="#{home.welcome}">[welcome]</h2>
           <p th:text="#{home.intro}">[intro]</p>
         </main>

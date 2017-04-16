@@ -11,6 +11,15 @@ docker-compose up
 
 The Consul UI is available at http://localhost:8500/ui/#/dc1/services.
 
+
+# TODO
+
+- Secure REST endpoints
+- Integrate Kafka
+- Drop Kafka Data into TS buckets
+
+
+
 ## Tech stack
 
 Spring Boot

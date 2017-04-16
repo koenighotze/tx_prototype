@@ -2,7 +2,6 @@ package org.koenighotze.txprototype.user.config;
 
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
-import org.keycloak.adapters.springsecurity.*;
 import org.keycloak.adapters.springsecurity.client.*;
 import org.keycloak.adapters.springsecurity.config.*;
 import org.keycloak.adapters.springsecurity.filter.*;
@@ -13,14 +12,13 @@ import org.springframework.boot.web.servlet.*;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.authentication.builders.*;
 import org.springframework.security.config.annotation.web.builders.*;
-import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.core.session.*;
 import org.springframework.security.web.authentication.session.*;
 
-@Configuration
-@EnableWebSecurity
-@ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
-public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
+//@Configuration
+//@EnableWebSecurity
+//@ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
+public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Autowired
     private KeycloakClientRequestFactory keycloakClientRequestFactory;
 
@@ -60,12 +58,15 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
+            .antMatchers("/crm/", "/crm/index.html")
+            .permitAll()
             .antMatchers("/crm/users*")
             .hasRole("USER")
-//            .antMatchers("/crm/admin*")
-//            .hasRole("ADMIN")
+            .antMatchers("/crm/admin*")
+            .hasRole("ADMIN")
             .anyRequest()
-            .permitAll();
+            .authenticated();
+        //            .permitAll();
     }
 
 }

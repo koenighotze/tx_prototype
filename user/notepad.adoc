@@ -24,7 +24,6 @@ digraph G {
 ----
 
 
-
 ## About consul
 
 Suppose Consul is running at `192.168.99.100`

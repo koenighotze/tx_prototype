@@ -27,21 +27,21 @@ management:
 kafka:
   bootstrapServersConfig: localhost:9092
 
-keycloak:
-  configurationFile: classpath:/keycloak.json
+#keycloak:
+#  configurationFile: classpath:/keycloak.json
 
 # I can safely store these values, a these are only generated from
 # the local docker keycloak
-#security:
-#  oauth2:
-#    client:
-#      clientId: tx_prototype-user
-#      clientSecret: d6f4dbe6-7586-4aad-b248-ac765022fb18
-#      accessTokenUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/token
-#      userAuthorizationUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/auth
-#    resource:
+security:
+  oauth2:
+    client:
+      clientId: tx_prototype-user
+      clientSecret: d6f4dbe6-7586-4aad-b248-ac765022fb18
+      accessTokenUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/token
+      userAuthorizationUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/auth
+    resource:
 #      tokenInfoUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/token
-#      user-info-uri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/userinfo
+      user-info-uri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/userinfo
 
 
 
