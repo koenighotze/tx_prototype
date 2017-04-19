@@ -14,9 +14,13 @@ import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 @Configuration
+@Profile("!mock")
 public class KafkaConfig {
     @Value("${kafka.bootstrapServersConfig}")
     private String bootstrapServersConfig;
+
+    @Value("${kafka.requestTimeoutMs}")
+    private Integer requestTimeoutMs;
 
     @Bean
     public ProducerFactory<String, UserCreatedEvent> producerFactory(ObjectMapper objectMapper) {
@@ -33,7 +37,7 @@ public class KafkaConfig {
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put(BOOTSTRAP_SERVERS_CONFIG, bootstrapServersConfig);
-        props.put(REQUEST_TIMEOUT_MS_CONFIG, bootstrapServersConfig);
+        props.put(REQUEST_TIMEOUT_MS_CONFIG, requestTimeoutMs);
         return props;
     }
 
