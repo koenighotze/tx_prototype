@@ -2,8 +2,8 @@ server:
   port: 8088
   context-path: /crm
 
-spring:
 
+spring:
   data:
     mongodb:
       host: localhost
@@ -14,6 +14,9 @@ spring:
       indent_output: true
   main:
     banner-mode: "off"
+  thymeleaf:
+    cache: false
+    mode: HTML
 
 logging:
   config: classpath:logback-spring.xml
@@ -27,9 +30,6 @@ management:
 kafka:
   bootstrapServersConfig: localhost:9092
 
-#keycloak:
-#  configurationFile: classpath:/keycloak.json
-
 # I can safely store these values, a these are only generated from
 # the local docker keycloak
 security:
@@ -42,35 +42,3 @@ security:
     resource:
 #      tokenInfoUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/token
       user-info-uri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/userinfo
-
-
-
-#keycloak.realm = demorealm
-#keycloak.auth-server-url = http://127.0.0.1:8080/auth
-#keycloak.ssl-required = external
-#keycloak.resource = demoapp
-#keycloak.credentials.secret = 11111111-1111-1111-1111-111111111111
-#keycloak.use-resource-role-mappings = true
-
-#keycloak:
-#  realm: tx_prototype
-#  auth-server-url: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/auth #http://localhost:8080/auth
-#  credentials.secret: d6f4dbe6-7586-4aad-b248-ac765022fb18
-#  resource: tx_prototype-user
-##  ssl-required: external
-#  enable-basic-auth: true
-#  principal-attribute: preferred_username
-#  securityConstraints:
-#    - securityCollections:
-#      - name: static-resources
-#      - patterns:
-#        - "/css/*"
-#        - "/fonts/*"
-#        - "/js/*"
-#    - securityCollections:
-#      - name: application
-#      - authRoles: user
-#      - patterns:
-#        - "/users/*"
-#  use-resource-role-mappings: true
-#

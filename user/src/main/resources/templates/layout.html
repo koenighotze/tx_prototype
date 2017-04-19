@@ -3,9 +3,9 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-    <th:block layout:include="fragments/htmlhead"/>
+    <th:block layout:insert="~{fragments/htmlhead}"/>
 <body>
-    <th:block layout:replace="fragments/navigation"/>
+    <th:block layout:insert="~{fragments/navigation}"/>
 
     <div class="container-fluid">
         <div th:fragment="logout" class="logout" sec:authorize="isAuthenticated()">
@@ -20,13 +20,13 @@
 
         <div class="row">
             <div class="col-md-12">
-                <th:block layout:include="fragments/pagetitle"/>
+                <th:block layout:insert="~{fragments/pagetitle}"/>
                 <th:block layout:fragment="content"/>
             </div>
         </div>
     </div>
 
     <th:block layout:fragment="body_end"/>
-    <th:block layout:replace="fragments/body_scripts :: end"/>
+    <th:block layout:replace="~{fragments/body_scripts :: end}"/>
 </body>
 </html>

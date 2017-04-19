@@ -9,13 +9,15 @@ import org.koenighotze.txprototype.user.model.*;
 import org.koenighotze.txprototype.user.repository.*;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
+import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.context.annotation.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.*;
 import org.thymeleaf.extras.springsecurity4.dialect.*;
 
-@SpringBootApplication
 @RestController
+// deactivate 2.x autoconfig
+@SpringBootApplication(exclude={ThymeleafAutoConfiguration.class} )
 public class UserAdministrationApplication { // extends WebSecurityConfigurerAdapter {
     public static void main(String[] args) {
         SpringApplication.run(UserAdministrationApplication.class, args);
