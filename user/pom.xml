@@ -86,6 +86,19 @@
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.thymeleaf.extras</groupId>
+      <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+      <version>2.1.2.RELEASE</version>
+      <!--<version>3.0.2.RELEASE</version>-->
+    </dependency>
+
+    <dependency>
+      <groupId>org.thymeleaf.extras</groupId>
+      <artifactId>thymeleaf-extras-java8time</artifactId>
+      <version>3.0.0.RELEASE</version>
+    </dependency>
+
     <!--<dependency>-->
       <!--<groupId>org.keycloak</groupId>-->
       <!--<artifactId>keycloak-spring-boot-adapter</artifactId>-->

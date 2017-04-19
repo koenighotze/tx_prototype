@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.*;
 import org.springframework.context.annotation.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.*;
+import org.thymeleaf.extras.springsecurity4.dialect.*;
 
 @SpringBootApplication
 @RestController
@@ -25,6 +26,10 @@ public class UserAdministrationApplication { // extends WebSecurityConfigurerAda
         return principal;
     }
 
+    @Bean
+    public SpringSecurityDialect securityDialect() {
+        return new SpringSecurityDialect();
+    }
 
     @Bean
     //    @LoadBalanced

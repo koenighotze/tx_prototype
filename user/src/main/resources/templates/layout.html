@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
     <th:block layout:include="fragments/htmlhead"/>
 <body>
     <th:block layout:replace="fragments/navigation"/>
 
     <div class="container-fluid">
+        <div th:fragment="logout" class="logout" sec:authorize="isAuthenticated()">
+            Logged in user: <span sec:authentication="name"></span> |
+            Roles: <span sec:authentication="principal.authorities"></span>
+            <div>
+                <form action="#" th:action="@{/logout}" method="post">
+                    <input type="submit" value="Logout" />
+                </form>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <th:block layout:include="fragments/pagetitle"/>
