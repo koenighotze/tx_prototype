@@ -1,32 +1,18 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-    <th:block layout:insert="~{fragments/htmlhead}"/>
-<body>
-    <th:block layout:insert="~{fragments/navigation}"/>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-    <div class="container-fluid">
-        <div th:fragment="logout" class="logout" sec:authorize="isAuthenticated()">
-            Logged in user: <span sec:authentication="name"></span> |
-            Roles: <span sec:authentication="principal.authorities"></span>
-            <div>
-                <form action="#" th:action="@{/logout}" method="post">
-                    <input type="submit" value="Logout" />
-                </form>
-            </div>
-        </div>
+  <th:block layout:insert="~{fragments/htmlhead}"/>
+<body style="padding-top: 50px; padding-bottom: 20px;">
+  <th:block layout:insert="~{fragments/navigation}"/>
 
-        <div class="row">
-            <div class="col-md-12">
-                <th:block layout:insert="~{fragments/pagetitle}"/>
-                <th:block layout:fragment="content"/>
-            </div>
-        </div>
-    </div>
+  <th:block layout:fragment="content"/>
 
-    <th:block layout:fragment="body_end"/>
-    <th:block layout:replace="~{fragments/body_scripts :: end}"/>
+  <th:block layout:fragment="body_end"/>
+
+  <!--<th:block layout:insert="~{fragments/breadcrumb}"/>-->
+
+  <th:block layout:replace="~{fragments/body_scripts :: end}"/>
 </body>
 </html>

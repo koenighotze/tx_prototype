@@ -7,11 +7,14 @@ import org.springframework.mock.web.*;
 import org.springframework.web.context.request.*;
 
 public class IndexResourceTest {
-    @Test
-    public void index_resource_contains_self_rel_link() {
+    @Before
+    public void initRequestContextHolder() {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+    }
 
+    @Test
+    public void index_resource_contains_self_rel_link() {
         IndexResource indexResource = new IndexResource();
 
         assertThat(indexResource.getLink("self")).isNotNull();
@@ -19,5 +22,8 @@ public class IndexResourceTest {
 
     @Test
     public void index_resource_contains_link_to_user_controller() {
+        IndexResource indexResource = new IndexResource();
+
+        assertThat(indexResource.getLink("users")).isNotNull();
     }
 }

@@ -1,6 +1,26 @@
 version: "2"
 
 services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:3.2.4
+    volumes:
+      - mongodb-data:/data/db
+    ports:
+      - "27017:27017"
+
+  consul:
+    container_name: consul
+    image: progrium/consul
+    command: -server -bootstrap -ui-dir /ui
+    volumes:
+        - consul-data:/data
+    ports:
+      - "8500:8500"
+      - "8600:8600"
+      - "8400:8400"
+      - "8600:53/udp"
+
   # influxdb:
   #   image: influxdb:1.1.4-alpine
   #   ports:
@@ -28,27 +48,9 @@ services:
 #        - "8097:8087"
 #        - "8099:8098"
 
-  mongodb:
-    container_name: mongodb
-    image: mongo:3.2.4
-    volumes:
-      - mongodb-data:/data/db
-    ports:
-      - "27017:27017"
 
-#  consul:
-#    container_name: consul
-#    image: progrium/consul
-#    command: -server -bootstrap -ui-dir /ui
-#    volumes:
-#        - consul-data:/data
-#    ports:
-#      - "8500:8500"
-#      - "8600:8600"
-#      - "8400:8400"
-#      - "8600:53/udp"
+################## KEYCLOAK
 
-  # Keycloak
   keycloak-postgres:
     container_name: postgres
     image: postgres:9.6.2-alpine
@@ -73,8 +75,8 @@ services:
     depends_on:
       - keycloak-postgres
 
-    # kafka
 
+################## KAFKA
 
     #  zookeeper:
     #    container_name: zookeeper

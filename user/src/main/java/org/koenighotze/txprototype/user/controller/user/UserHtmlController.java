@@ -24,11 +24,13 @@ import javaslang.*;
 import javaslang.collection.*;
 import org.koenighotze.txprototype.user.model.*;
 import org.koenighotze.txprototype.user.resources.*;
+import org.springframework.hateoas.mvc.*;
 import org.springframework.http.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.support.*;
 
 @Controller
@@ -51,6 +53,9 @@ public class UserHtmlController {
                 Stream.ofAll(allUsers.getUsers())
                         .sorted(compareByLastAndFirstName())
                         .map(res -> Tuple.of(res.getUser(), res.getLink(REL_SELF).getHref())));
+
+        ControllerLinkBuilder controllerLinkBuilder = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(UserHtmlController.class).newUser("123", null));
+        allUsers.add(controllerLinkBuilder.withRel("create_form"));
         addLinksToModel(allUsers, model);
         //@formatter:on
         return "users";
@@ -91,11 +96,12 @@ public class UserHtmlController {
     }
 
     @RequestMapping(value = "/new/{publicId}", method = GET)
-    public String newUser(@PathVariable String publicId, Model model) {
+    public ModelAndView newUser(@PathVariable String publicId, Model model) {
         User user = new User(publicId, "", "", "", "");
         model.addAttribute("user", user);
         model.addAttribute("collection", new UserResource(user).getLink(COLLECTION.getRel()).getHref());
-        return "new_user";
+        return new ModelAndView("new_user", model.asMap());
+//        return "new_user";
     }
 
     @RequestMapping(value = "/new/{publicId}", method = POST)

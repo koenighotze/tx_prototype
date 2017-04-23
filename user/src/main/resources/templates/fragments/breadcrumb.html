@@ -1,0 +1,17 @@
+<!--<div xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"-->
+<!--xmlns:th="http://www.thymeleaf.org">-->
+<div class="container-fluid"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+     xmlns:th="http://www.thymeleaf.org"
+     sec:authorize="isAuthenticated()">
+  <header class="header">
+    <ol class="breadcrumb text-right">
+      <li>
+        <a href="#" th:text="#{user.loggedInAs(${#authentication.name}, ${#authentication.authorities})}">[Logged
+          In]</a>
+      </li>
+      <li><a th:href="@{/}" th:text="#{user.home}">[home]</a></li>
+    </ol>
+  </header>
+</div>
+<!--</div>-->

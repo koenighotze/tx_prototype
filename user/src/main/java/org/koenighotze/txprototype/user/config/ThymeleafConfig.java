@@ -8,6 +8,8 @@ import org.springframework.context.*;
 import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.*;
 import org.thymeleaf.*;
+import org.thymeleaf.extras.java8time.dialect.*;
+import org.thymeleaf.extras.springsecurity4.dialect.*;
 import org.thymeleaf.spring4.*;
 import org.thymeleaf.spring4.templateresolver.*;
 import org.thymeleaf.spring4.view.*;
@@ -42,9 +44,9 @@ public class ThymeleafConfig implements ApplicationContextAware {
     public TemplateEngine templateEngine() {
         SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setTemplateResolver(templateResolver());
-//        engine.addDialect(new Java8TimeDialect());
+        engine.addDialect(new Java8TimeDialect());
         engine.addDialect(new LayoutDialect());
-//        engine.addDialect(new SpringSecurityDialect());
+        engine.addDialect(new SpringSecurityDialect());
 //        engine.addDialect(new SpringStandardDialect());
         return engine;
     }

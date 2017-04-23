@@ -21,7 +21,7 @@ public class UserResource extends ResourceSupport {
     public UserResource(@JsonProperty("user") User user) {
         this.user = requireNonNull(user);
         add(linkTo(methodOn(UserRestController.class).getAllUsers()).withRel(COLLECTION.getRel()));
-        add(linkTo(methodOn(UserRestController.class, user.getUserId()).userByPublicId(user.getPublicId())).withSelfRel());
+        add(linkTo(methodOn(UserRestController.class).userByPublicId(user.getPublicId())).withSelfRel());
     }
 
     public static Comparator<UserResource> compareByLastAndFirstName() {

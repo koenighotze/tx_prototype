@@ -5,17 +5,17 @@
       th:with="title=#{user.title(${user.username})}">
 <th:block layout:fragment="content">
     <div class="container">
-        <header class="header">
-            <ol class="breadcrumb text-right">
-                <li><a th:href="@{/}" th:text="#{user.home}">[home]</a></li>
-                <li><a th:href="@{${collection}}" th:text="#{user.users}">[users]</a></li>
-            </ol>
+        <!--<header class="header">-->
+            <!--<ol class="breadcrumb text-right">-->
+                <!--<li><a th:href="@{/}" th:text="#{user.home}">[home]</a></li>-->
+                <!--<li><a th:href="@{${collection}}" th:text="#{user.users}">[users]</a></li>-->
+            <!--</ol>-->
 
-            <span class="logo"></span>
-        </header>
+            <!--<span class="logo"></span>-->
+        <!--</header>-->
 
         <main role="main">
-            <h2 th:text="#{user.title(${user.username})}">[username]</h2>
+            <h1 th:text="#{user.title(${user.username})}">[username]</h1>
 
             <div class="form-group">
                 <label for="username" th:text="#{user.username}">[usename]</label>

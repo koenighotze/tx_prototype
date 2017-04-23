@@ -1,21 +1,36 @@
-<!--<nav class="navbar navbar-default navbar-pf" role="navigation" xmlns:th="http://www.thymeleaf.org">-->
-    <!--<div class="navbar-header">-->
-        <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">-->
-            <!--<span class="sr-only">Toggle navigation</span>-->
-            <!--<span class="icon-bar"></span>-->
-            <!--<span class="icon-bar"></span>-->
-            <!--<span class="icon-bar"></span>-->
-        <!--</button>-->
-        <!--<a class="navbar-brand" th:href="@{/}">-->
-            <!--[app]-->
-        <!--</a>-->
-    <!--</div>-->
-    <!--<div class="collapse navbar-collapse navbar-collapse-1">-->
-        <!--<ul class="nav navbar-nav navbar-utility">-->
-            <!--<li id="ui-toggle" class="hidden">-->
-            <!--</li>-->
-        <!--</ul>-->
-        <!--<ul class="nav navbar-nav navbar-primary">-->
-        <!--</ul>-->
-    <!--</div>-->
-<!--</nav>-->
+<div class="navbar navbar-inverse navbar-fixed-top"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+     xmlns:th="http://www.thymeleaf.org"
+     role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+              aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#" th:text="#{application.name}">[App name]</a>
+    </div>
+
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li sec:authorize="isAuthenticated()"> <!-- check th:if -->
+          <div class="logout">
+            <form class="navbar-form navbar-right" th:action="@{/logout}"
+                  th:method="post">
+              <button class="btn btn-success" th:text="Logout"></button>
+            </form>
+          </div>
+        </li>
+        <li sec:authorize="!isAuthenticated()"> <!-- check th:if -->
+          <a th:href="@{/login}">
+            <button class="btn btn-success" th:text="Login"></button>
+          </a>
+        </li>
+      </ul>
+    </div><!--/.navbar-collapse -->
+  </div>
+</div>
+

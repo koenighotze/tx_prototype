@@ -5,23 +5,23 @@
       th:with="title=#{users.title}">
 <th:block layout:fragment="content">
     <div class="container">
-        <header class="header">
-            <ol class="breadcrumb text-right">
-                <li><a th:href="@{/}" th:text="#{user.home}">[home]</a></li>
-            </ol>
+        <!--<header class="header">-->
+            <!--<ol class="breadcrumb text-right">-->
+                <!--<li><a th:href="@{/}" th:text="#{user.home}">[home]</a></li>-->
+            <!--</ol>-->
 
-            <span class="logo"></span>
-        </header>
+            <!--<span class="logo"></span>-->
+        <!--</header>-->
 
         <main role="main">
-            <h2>Listing users</h2>
+            <h1>Listing users</h1>
             <div>
                 <div class="alert alert-info" th:if="${message}" th:text="#{${message}}">
                 </div>
             </div>
 
 
-            <a th:href="@{${create}}">
+            <a th:href="@{${create_form}}">
                 <button class="btn btn-primary btn-sm" th:text="#{user.create}">[new]</button>
             </a>
 

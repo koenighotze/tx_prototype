@@ -14,7 +14,7 @@ public class UsersResource extends ResourceSupport {
     public UsersResource(List<UserResource> users) {
         this.users = users;
         add(linkTo(methodOn(UserRestController.class).getAllUsers()).withSelfRel());
-        add(linkTo(methodOn(UserRestController.class).newUser(randomUUID().toString(), null)).withRel("create"));
+        add(linkTo(methodOn(UserRestController.class).newUser(randomUUID().toString(), null)).withRel("create_new"));
     }
 
     public List<UserResource> getUsers() {

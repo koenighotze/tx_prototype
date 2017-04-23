@@ -1,0 +1,11 @@
+div.logout {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 7px;
+    position: relative;
+    display: block;
+    line-height: 20px;
+}
+div.logout > .navbar-form {
+    padding-bottom : 7px;
+}
