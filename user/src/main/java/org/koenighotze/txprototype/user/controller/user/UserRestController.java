@@ -70,7 +70,7 @@ public class UserRestController {
                                   .getOrElse(CREATED);
         userRepository.save(userToStore);
 
-        kafkaTemplate.send("users", UserCreatedEvent.createdNow(user));
+//        kafkaTemplate.send("users", UserCreatedEvent.createdNow(user));
 
         UserResource userResource = new UserResource(userToStore);
         HttpHeaders httpHeaders = new HttpHeaders();
