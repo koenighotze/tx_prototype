@@ -9,17 +9,18 @@ import org.springframework.security.config.annotation.web.configuration.*;
 @EnableOAuth2Sso
 public class Oauth2Config extends WebSecurityConfigurerAdapter {
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //@formatter:off
-        http.authorizeRequests()
-            .antMatchers("/*", "/login**", "/bootstrap/**", "/font-awesome/**", "/fonts/**", "/js/**").permitAll()
-            .antMatchers("/users**").hasRole("USERS")
-            .antMatchers("/admin**").hasRole("ADMIN")
-            .anyRequest().authenticated()
-            .and()
-              .logout().logoutSuccessUrl("/").permitAll();
+        http.csrf().disable().authorizeRequests().antMatchers("/**").permitAll();
+//        http.authorizeRequests()
+//            .antMatchers("/users/new/*").hasRole("CRM_ADMIN")
+//            .antMatchers("/users**").hasRole("USER")
+//            // TODO Add pattern that restricts on HTTP verb
+//            .antMatchers("/*", "/login**", "/bootstrap/**", "/font-awesome/**", "/fonts/**", "/js/**").permitAll()
+//            .anyRequest().authenticated()
+//            .and()
+//              .logout().logoutSuccessUrl("/").permitAll();
         //@formatter:on
     }
 }

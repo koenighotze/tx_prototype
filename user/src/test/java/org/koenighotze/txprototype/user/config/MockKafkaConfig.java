@@ -13,7 +13,7 @@ public class MockKafkaConfig {
     @Bean
     @Primary
     @SuppressWarnings("unchecked")
-    public KafkaTemplate<String, UserCreatedEvent> kafkaTemplate(ObjectMapper objectMapper) {
-        return (KafkaTemplate<String, UserCreatedEvent>) mock(KafkaTemplate.class);
+    public KafkaTemplate<String, UserEvent> kafkaTemplate(ObjectMapper objectMapper) {
+        return (KafkaTemplate<String, UserEvent>) mock(KafkaTemplate.class);
     }
 }

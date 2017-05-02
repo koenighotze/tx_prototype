@@ -5,13 +5,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -20,26 +25,35 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import java.io.*;
+import java.util.concurrent.*;
 
 import javaslang.collection.*;
+import org.apache.kafka.clients.producer.*;
+import org.apache.kafka.common.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.koenighotze.txprototype.user.*;
+import org.koenighotze.txprototype.user.events.*;
 import org.koenighotze.txprototype.user.model.*;
 import org.koenighotze.txprototype.user.repository.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.http.converter.*;
 import org.springframework.http.converter.json.*;
+import org.springframework.kafka.core.*;
+import org.springframework.kafka.support.*;
 import org.springframework.mock.http.*;
+import org.springframework.test.context.*;
 import org.springframework.test.context.junit4.*;
 import org.springframework.test.context.web.*;
 import org.springframework.test.web.servlet.*;
+import org.springframework.util.concurrent.*;
 import org.springframework.web.context.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = UserAdministrationApplication.class)
 @WebAppConfiguration
+@ActiveProfiles("mock")
 public class UserRestControllerTest {
 
     @Autowired
@@ -47,6 +61,9 @@ public class UserRestControllerTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private KafkaTemplate<String, UserEvent> kafkaTemplate;
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -63,11 +80,17 @@ public class UserRestControllerTest {
     private MockMvc mockMvc;
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
-    //    @BeforeClass
-    //    public static void setUpBeforeClass() throws Exception {
-    //        String kafkaBootstrapServers = embeddedKafka.getBrokersAsString();
-    //        System.setProperty("kafka.bootstrap-servers", kafkaBootstrapServers);
-    //    }
+    @Before
+    public void initKafkaTemplate() throws Exception {
+        //            String kafkaBootstrapServers = embeddedKafka.getBrokersAsString();
+        //            System.setProperty("kafka.bootstrap-servers", kafkaBootstrapServers);
+        ListenableFuture<SendResult<String, UserEvent>> f = mock(ListenableFuture.class);
+        RecordMetadata metaData = new RecordMetadata(new TopicPartition("users", 1), 12, 12, 12, 12, 1, 1);
+        ProducerRecord<String, UserEvent> producerRecord = mock(ProducerRecord.class);
+        when(f.get(anyInt(), any(TimeUnit.class))).thenReturn(new SendResult<>(producerRecord, metaData));
+        when(kafkaTemplate.sendDefault(any(UserEvent.class))).thenReturn(f);
+
+    }
 
     @Before
     public void setup() {
@@ -108,11 +131,13 @@ public class UserRestControllerTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void deleting_a_user_returns_ok() throws Exception {
+
         User user = userRepository.save(new User("23", "first", "last", "flast", "foo@bar.de"));
         //@formatter:off
         mockMvc.perform(delete("/users/{id}", user.getPublicId()))
-               .andExpect(status().is(PERMANENT_REDIRECT.value()));
+               .andExpect(status().is(NO_CONTENT.value()));
 
         mockMvc.perform(get("/users/{id}", user.getPublicId()))
                .andExpect(status().is(NOT_FOUND.value()));
@@ -124,7 +149,7 @@ public class UserRestControllerTest {
         User user = new User(randomUUID().toString(), "First", "Last", "nick", "foo@bar.de");
 
         //@formatter:off
-        mockMvc.perform(put("/users/{id}", user.getPublicId()).contentType(APPLICATION_JSON)
+        mockMvc.perform(post("/users/{id}", user.getPublicId()).contentType(APPLICATION_JSON)
                                                               .content(json(user)))
                .andExpect(status().is(CREATED.value()));
         //@formatter:on

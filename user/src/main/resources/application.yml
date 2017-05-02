@@ -30,6 +30,7 @@ management:
 kafka:
   bootstrapServersConfig: localhost:9092
   requestTimeoutMs: 1000
+  maxBlockMs: 1000
 
 # I can safely store these values, a these are only generated from
 # the local docker keycloak
@@ -41,5 +42,4 @@ security:
       accessTokenUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/token
       userAuthorizationUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/auth
     resource:
-#      tokenInfoUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/token
       user-info-uri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/userinfo

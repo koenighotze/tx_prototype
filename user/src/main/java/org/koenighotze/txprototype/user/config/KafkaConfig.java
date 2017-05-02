@@ -1,6 +1,7 @@
 package org.koenighotze.txprototype.user.config;
 
 import static org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG;
+import static org.apache.kafka.clients.producer.ProducerConfig.MAX_BLOCK_MS_CONFIG;
 import static org.apache.kafka.clients.producer.ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG;
 
 import java.util.*;
@@ -22,9 +23,12 @@ public class KafkaConfig {
     @Value("${kafka.requestTimeoutMs}")
     private Integer requestTimeoutMs;
 
+    @Value("${kafka.maxBlockMs}")
+    private Integer maxBlockMs;
+
     @Bean
-    public ProducerFactory<String, UserCreatedEvent> producerFactory(ObjectMapper objectMapper) {
-        DefaultKafkaProducerFactory<String, UserCreatedEvent> factory = new DefaultKafkaProducerFactory<>(
+    public ProducerFactory<String, UserEvent> producerFactory(ObjectMapper objectMapper) {
+        DefaultKafkaProducerFactory<String, UserEvent> factory = new DefaultKafkaProducerFactory<>(
             producerConfigs());
 
         factory.setKeySerializer(new StringSerializer());
@@ -38,12 +42,16 @@ public class KafkaConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(BOOTSTRAP_SERVERS_CONFIG, bootstrapServersConfig);
         props.put(REQUEST_TIMEOUT_MS_CONFIG, requestTimeoutMs);
+        props.put(MAX_BLOCK_MS_CONFIG, maxBlockMs);
         return props;
     }
 
     @Bean
-    public KafkaTemplate<String, UserCreatedEvent> kafkaTemplate(ObjectMapper objectMapper) {
-        return new KafkaTemplate<>(producerFactory(objectMapper));
+    public KafkaTemplate<String, UserEvent> kafkaTemplate(ObjectMapper objectMapper) {
+        KafkaTemplate<String, UserEvent> kafkaTemplate = new KafkaTemplate<>(
+            producerFactory(objectMapper));
+        kafkaTemplate.setDefaultTopic("user");
+        return kafkaTemplate;
     }
 
 }
