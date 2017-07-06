@@ -4,7 +4,7 @@ import static java.util.UUID.randomUUID;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import javaslang.collection.*;
+import io.vavr.collection.*;
 import org.koenighotze.txprototype.user.controller.user.*;
 import org.springframework.hateoas.*;
 

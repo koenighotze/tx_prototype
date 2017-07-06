@@ -1,10 +1,8 @@
 package org.koenighotze.txprototype.user;
 
-import java.security.*;
-
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.jsr310.*;
-import javaslang.jackson.datatype.*;
+import io.vavr.jackson.datatype.*;
 import org.koenighotze.txprototype.user.model.*;
 import org.koenighotze.txprototype.user.repository.*;
 import org.springframework.boot.*;
@@ -24,10 +22,10 @@ public class UserAdministrationApplication { // extends WebSecurityConfigurerAda
         SpringApplication.run(UserAdministrationApplication.class, args);
     }
 
-    @RequestMapping("/session")
-    public Principal user(Principal principal) {
-        return principal;
-    }
+//    @RequestMapping("/session")
+//    public Principal user(Principal principal) {
+//        return principal;
+//    }
 
     @Bean
     public SpringSecurityDialect securityDialect() {
@@ -51,12 +49,12 @@ public class UserAdministrationApplication { // extends WebSecurityConfigurerAda
     }
 
     @Bean
-    public static Module javaslangModule() {
-        return new JavaslangModule();
+    public Module vavrModule() {
+        return new VavrModule();
     }
 
     @Bean
-    public static Module jsr310Module() {
+    public Module jsr310Module() {
         return new JavaTimeModule();
     }
 }

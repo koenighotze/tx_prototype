@@ -23,18 +23,17 @@
     <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
     <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
     <sonar.jdbc.url>jdbc:mysql://mysql:3306/sonarqube</sonar.jdbc.url>
-
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
     <assertj.version>3.5.2</assertj.version>
-    <javaslang.version>2.0.5</javaslang.version>
-    <javaslang.jackson.version>2.0.5</javaslang.jackson.version>
+    <vavr.version>0.9.0</vavr.version>
+    <vavr.jackson.version>0.9.0</vavr.jackson.version>
     <commons.lang.version>3.4</commons.lang.version>
     <json.path.version>2.2.0</json.path.version>
-    <kafka.version>1.2.0.RELEASE</kafka.version>
+    <jackson.jsr310.version>2.8.8</jackson.jsr310.version>
     <jackson.jsr310.version>2.8.8</jackson.jsr310.version>
     <flapdoodle.mongo.version>2.0.0</flapdoodle.mongo.version>
     <thymeleaf.version>3.0.5.RELEASE</thymeleaf.version>
@@ -79,10 +78,10 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.springframework.vault</groupId>
-      <artifactId>spring-vault-core</artifactId>
-    </dependency>
+    <!--<dependency>-->
+    <!--<groupId>org.springframework.vault</groupId>-->
+    <!--<artifactId>spring-vault-core</artifactId>-->
+    <!--</dependency>-->
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -92,7 +91,6 @@
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf</artifactId>
-
     </dependency>
 
     <dependency>
@@ -122,13 +120,13 @@
     </dependency>
 
     <dependency>
-      <groupId>io.javaslang</groupId>
-      <artifactId>javaslang</artifactId>
+      <groupId>io.vavr</groupId>
+      <artifactId>vavr</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.javaslang</groupId>
-      <artifactId>javaslang-jackson</artifactId>
+      <groupId>io.vavr</groupId>
+      <artifactId>vavr-jackson</artifactId>
     </dependency>
 
     <dependency>
@@ -186,17 +184,6 @@
     </dependency>
 
 
-    <!-- Kafka Support -->
-    <dependency>
-      <groupId>org.springframework.kafka</groupId>
-      <artifactId>spring-kafka</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.kafka</groupId>
-      <artifactId>spring-kafka-test</artifactId>
-    </dependency>
-
     <!-- JSON Schema -->
 
     <!--<dependency>-->
@@ -251,20 +238,6 @@
         <version>3.0.0.RELEASE</version>
       </dependency>
 
-      <!-- Kafka -->
-      <dependency>
-        <groupId>org.springframework.kafka</groupId>
-        <artifactId>spring-kafka</artifactId>
-        <version>${kafka.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.springframework.kafka</groupId>
-        <artifactId>spring-kafka-test</artifactId>
-        <version>${kafka.version}</version>
-        <scope>test</scope>
-      </dependency>
-
       <!-- Testing -->
       <dependency>
         <groupId>de.flapdoodle.embed</groupId>
@@ -308,7 +281,6 @@
         <version>${jackson.jsr310.version}</version>
       </dependency>
 
-
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
@@ -316,15 +288,15 @@
       </dependency>
 
       <dependency>
-        <groupId>io.javaslang</groupId>
-        <artifactId>javaslang</artifactId>
-        <version>${javaslang.version}</version>
+        <groupId>io.vavr</groupId>
+        <artifactId>vavr</artifactId>
+        <version>${vavr.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>io.javaslang</groupId>
-        <artifactId>javaslang-jackson</artifactId>
-        <version>${javaslang.jackson.version}</version>
+        <groupId>io.vavr</groupId>
+        <artifactId>vavr-jackson</artifactId>
+        <version>${vavr.jackson.version}</version>
       </dependency>
 
       <dependency>

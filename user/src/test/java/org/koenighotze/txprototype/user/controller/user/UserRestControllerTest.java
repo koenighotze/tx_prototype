@@ -5,10 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
@@ -25,29 +21,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import java.io.*;
-import java.util.concurrent.*;
 
-import javaslang.collection.*;
-import org.apache.kafka.clients.producer.*;
-import org.apache.kafka.common.*;
+import io.vavr.collection.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.koenighotze.txprototype.user.*;
-import org.koenighotze.txprototype.user.events.*;
 import org.koenighotze.txprototype.user.model.*;
 import org.koenighotze.txprototype.user.repository.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.http.converter.*;
 import org.springframework.http.converter.json.*;
-import org.springframework.kafka.core.*;
-import org.springframework.kafka.support.*;
 import org.springframework.mock.http.*;
 import org.springframework.test.context.*;
 import org.springframework.test.context.junit4.*;
 import org.springframework.test.context.web.*;
 import org.springframework.test.web.servlet.*;
-import org.springframework.util.concurrent.*;
 import org.springframework.web.context.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -63,9 +52,6 @@ public class UserRestControllerTest {
     private UserRepository userRepository;
 
     @Autowired
-    private KafkaTemplate<String, UserEvent> kafkaTemplate;
-
-    @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
         mappingJackson2HttpMessageConverter = List.of(converters)
                                                   .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
@@ -73,24 +59,8 @@ public class UserRestControllerTest {
                                                   .getOrElseThrow(() -> new RuntimeException("No Converter found!"));
     }
 
-    //    @ClassRule
-    //    public static KafkaEmbedded embeddedKafka =
-    //        new KafkaEmbedded(1, true, "users");
-    //
     private MockMvc mockMvc;
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
-
-    @Before
-    public void initKafkaTemplate() throws Exception {
-        //            String kafkaBootstrapServers = embeddedKafka.getBrokersAsString();
-        //            System.setProperty("kafka.bootstrap-servers", kafkaBootstrapServers);
-        ListenableFuture<SendResult<String, UserEvent>> f = mock(ListenableFuture.class);
-        RecordMetadata metaData = new RecordMetadata(new TopicPartition("users", 1), 12, 12, 12, 12, 1, 1);
-        ProducerRecord<String, UserEvent> producerRecord = mock(ProducerRecord.class);
-        when(f.get(anyInt(), any(TimeUnit.class))).thenReturn(new SendResult<>(producerRecord, metaData));
-        when(kafkaTemplate.sendDefault(any(UserEvent.class))).thenReturn(f);
-
-    }
 
     @Before
     public void setup() {

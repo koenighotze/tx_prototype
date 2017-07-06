@@ -1,17 +1,17 @@
 package org.koenighotze.txprototype.user.controller.user;
 
-import static javaslang.API.$;
-import static javaslang.API.Case;
-import static javaslang.API.Match;
-import static javaslang.Patterns.Some;
-import static javaslang.Predicates.instanceOf;
+import static io.vavr.API.$;
+import static io.vavr.API.Case;
+import static io.vavr.API.Match;
+import static io.vavr.Patterns.$Some;
+import static io.vavr.Predicates.instanceOf;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.springframework.hateoas.Link.REL_SELF;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -24,11 +24,13 @@ import javax.inject.*;
 import org.koenighotze.txprototype.user.model.*;
 import org.koenighotze.txprototype.user.resources.*;
 import org.springframework.http.*;
+import org.springframework.security.access.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/users", produces = APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/users", produces = APPLICATION_JSON)
 //@PreAuthorize("hasRole('ROLE_USER')")
+@Secured("ROLE_USER")
 public class UserRestController {
 
     private final UserCommandService commandService;
@@ -82,7 +84,7 @@ public class UserRestController {
     public ResponseEntity<UserResource> userByPublicId(@PathVariable String publicId) {
         //@formatter:off
         return Match(queryService.findByPublicId(publicId)).of(
-                Case(Some($(instanceOf(User.class))), user -> new ResponseEntity<>(new UserResource(user), OK)),
+                Case($Some($(instanceOf(User.class))), user -> new ResponseEntity<>(new UserResource(user), OK)),
                 Case($(), new ResponseEntity<>(NOT_FOUND))
         );
         //@formatter:on

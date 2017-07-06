@@ -18,6 +18,10 @@ spring:
     cache: false
     mode: HTML
 
+
+
+
+
 logging:
   config: classpath:logback-spring.xml
 
@@ -38,7 +42,7 @@ security:
   oauth2:
     client:
       clientId: tx_prototype-user
-      clientSecret: d6f4dbe6-7586-4aad-b248-ac765022fb18
+      clientSecret: 87d94d6e-ba78-4910-aa8d-1438cc3cd101
       accessTokenUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/token
       userAuthorizationUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/auth
     resource:

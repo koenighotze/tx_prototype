@@ -1,6 +1,6 @@
 package org.koenighotze.txprototype.user.controller.user;
 
-import javaslang.control.*;
+import io.vavr.control.*;
 import org.koenighotze.txprototype.user.events.*;
 import org.koenighotze.txprototype.user.model.*;
 import org.koenighotze.txprototype.user.repository.*;

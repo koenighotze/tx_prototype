@@ -1,7 +1,7 @@
 package org.koenighotze.txprototype.user.controller.user;
 
-import javaslang.collection.*;
-import javaslang.control.*;
+import io.vavr.collection.*;
+import io.vavr.control.*;
 import org.koenighotze.txprototype.user.model.*;
 import org.koenighotze.txprototype.user.repository.*;
 import org.springframework.stereotype.*;

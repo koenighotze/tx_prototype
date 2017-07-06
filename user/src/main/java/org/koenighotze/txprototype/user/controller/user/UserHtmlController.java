@@ -16,8 +16,8 @@ import javax.inject.*;
 import javax.validation.*;
 import javax.validation.constraints.*;
 
-import javaslang.*;
-import javaslang.collection.*;
+import io.vavr.*;
+import io.vavr.collection.*;
 import org.koenighotze.txprototype.user.messages.*;
 import org.koenighotze.txprototype.user.model.*;
 import org.koenighotze.txprototype.user.resources.*;

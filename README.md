@@ -83,3 +83,11 @@ http http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/user
 ```
 
 ## Kafka setup
+
+
+## Eventstore
+
+* Admin interface: Running at `http://127.0.0.1:2113/web/index.html#/`.
+ * Log in using `admin` and `changeit`
+
+* Stream == Aggregate
