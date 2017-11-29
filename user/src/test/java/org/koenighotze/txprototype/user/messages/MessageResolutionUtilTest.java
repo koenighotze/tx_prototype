@@ -1,9 +1,9 @@
 package org.koenighotze.txprototype.user.messages;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -23,7 +23,7 @@ public class MessageResolutionUtilTest {
             messageSource.getMessage(eq("known_code"), any(Object[].class), anyString(), any(Locale.class))).thenReturn(
             "the known message");
         when(messageSource.getMessage(eq("unkown_code"), any(Object[].class), eq("???unkown_code???"),
-            any(Locale.class))).thenReturn("???unkown_code???");
+                                      any(Locale.class))).thenReturn("???unkown_code???");
     }
 
     @Test

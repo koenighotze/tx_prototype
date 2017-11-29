@@ -1,7 +1,5 @@
 server:
   port: 8088
-  context-path: /crm
-
 
 spring:
   data:
@@ -18,18 +16,14 @@ spring:
     cache: false
     mode: HTML
 
-
-
-
-
 logging:
   config: classpath:logback-spring.xml
 
 debug: true
 
-management:
-  security:
-    enabled: false
+#management:
+#  security:
+#    enabled: false
 
 kafka:
   bootstrapServersConfig: localhost:9092
@@ -38,12 +32,12 @@ kafka:
 
 # I can safely store these values, a these are only generated from
 # the local docker keycloak
-security:
-  oauth2:
-    client:
-      clientId: tx_prototype-user
-      clientSecret: 87d94d6e-ba78-4910-aa8d-1438cc3cd101
-      accessTokenUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/token
-      userAuthorizationUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/auth
-    resource:
-      user-info-uri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/userinfo
+#security:
+#  oauth2:
+#    client:
+#      clientId: tx_prototype-user
+#      clientSecret: 87d94d6e-ba78-4910-aa8d-1438cc3cd101
+#      accessTokenUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/token
+#      userAuthorizationUri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/auth
+#    resource:
+#      user-info-uri: http://127.0.0.1:8080/auth/realms/tx_prototype/protocol/openid-connect/userinfo

@@ -24,13 +24,12 @@ import javax.inject.*;
 import org.koenighotze.txprototype.user.model.*;
 import org.koenighotze.txprototype.user.resources.*;
 import org.springframework.http.*;
-import org.springframework.security.access.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/users", produces = APPLICATION_JSON)
 //@PreAuthorize("hasRole('ROLE_USER')")
-@Secured("ROLE_USER")
+//@Secured("ROLE_USER")
 public class UserRestController {
 
     private final UserCommandService commandService;

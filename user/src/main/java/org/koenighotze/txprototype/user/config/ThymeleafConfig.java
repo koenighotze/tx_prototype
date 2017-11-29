@@ -1,23 +1,27 @@
 package org.koenighotze.txprototype.user.config;
 
-import nz.net.ultraq.thymeleaf.*;
+//import nz.net.ultraq.thymeleaf.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.autoconfigure.thymeleaf.*;
-import org.springframework.boot.context.properties.*;
 import org.springframework.context.*;
 import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.*;
 import org.thymeleaf.*;
-import org.thymeleaf.extras.java8time.dialect.*;
-import org.thymeleaf.extras.springsecurity4.dialect.*;
-import org.thymeleaf.spring4.*;
-import org.thymeleaf.spring4.templateresolver.*;
-import org.thymeleaf.spring4.view.*;
+import org.thymeleaf.spring5.*;
+import org.thymeleaf.spring5.templateresolver.*;
+import org.thymeleaf.spring5.view.*;
 import org.thymeleaf.templateresolver.*;
 
-@Configuration
+//import org.thymeleaf.extras.java8time.dialect.*;
+//import org.thymeleaf.extras.springsecurity4.dialect.*;
+//import org.thymeleaf.spring4.*;
+//import org.thymeleaf.spring4.templateresolver.*;
+//import org.thymeleaf.spring4.view.*;
+
+//@Configuration
 //@ConditionalOnClass({SpringTemplateEngine.class})
-@EnableConfigurationProperties({ThymeleafProperties.class})
+//@EnableConfigurationProperties({ThymeleafProperties.class})
 //@AutoConfigureAfter({WebMvcAutoConfiguration.class})
 public class ThymeleafConfig implements ApplicationContextAware {
 
@@ -34,7 +38,7 @@ public class ThymeleafConfig implements ApplicationContextAware {
     public ViewResolver viewResolver() {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setOrder(2147483642);
-        resolver.setTemplateEngine(templateEngine());
+        //        resolver.setTemplateEngine(templateEngine());
         resolver.setCharacterEncoding("UTF-8");
         return resolver;
     }
@@ -44,10 +48,10 @@ public class ThymeleafConfig implements ApplicationContextAware {
     public TemplateEngine templateEngine() {
         SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setTemplateResolver(templateResolver());
-        engine.addDialect(new Java8TimeDialect());
-        engine.addDialect(new LayoutDialect());
-        engine.addDialect(new SpringSecurityDialect());
-//        engine.addDialect(new SpringStandardDialect());
+        //        engine.addDialect(new Java8TimeDialect());
+        //        engine.addDialect(new LayoutDialect());
+        //        engine.addDialect(new SpringSecurityDialect());
+        //        engine.addDialect(new SpringStandardDialect());
         return engine;
     }
 
