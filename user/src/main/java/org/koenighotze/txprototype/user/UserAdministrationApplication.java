@@ -3,6 +3,7 @@ package org.koenighotze.txprototype.user;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.jsr310.*;
 import io.vavr.jackson.datatype.*;
+import nz.net.ultraq.thymeleaf.*;
 import org.koenighotze.txprototype.user.model.*;
 import org.koenighotze.txprototype.user.repository.*;
 import org.springframework.boot.*;
@@ -21,15 +22,20 @@ public class UserAdministrationApplication { // extends WebSecurityConfigurerAda
         SpringApplication.run(UserAdministrationApplication.class, args);
     }
 
-//    @RequestMapping("/session")
-//    public Principal user(Principal principal) {
-//        return principal;
-//    }
+    //    @RequestMapping("/session")
+    //    public Principal user(Principal principal) {
+    //        return principal;
+    //    }
 
     //    @Bean
     //    public SpringSecurityDialect securityDialect() {
     //        return new SpringSecurityDialect();
     //    }
+
+    @Bean
+    public LayoutDialect layoutDialect() {
+        return new LayoutDialect();
+    }
 
     @Bean
     //    @LoadBalanced
