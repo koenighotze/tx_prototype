@@ -13,10 +13,6 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.net.*;
 import javax.inject.*;
@@ -41,13 +37,13 @@ public class UserRestController {
         this.queryService = queryService;
     }
 
-    @RequestMapping(method = GET)
+    @GetMapping
     public HttpEntity<UsersResource> getAllUsers() {
         return new ResponseEntity<>(new UsersResource(queryService.findAllUsers()
                                                                   .map(UserResource::new)), OK);
     }
 
-    @RequestMapping(value = "/{publicId}", method = POST, consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/{publicId}", consumes = APPLICATION_JSON_VALUE)
     public HttpEntity<UserResource> newUser(@PathVariable String publicId, @RequestBody User user) {
         return commandService.newUser(publicId, user)
                              .map(createdUser -> {
@@ -60,7 +56,7 @@ public class UserRestController {
                              .getOrElse(new ResponseEntity<>(BAD_REQUEST));
     }
 
-    @RequestMapping(value = "/{publicId}", method = PUT, consumes = APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/{publicId}", consumes = APPLICATION_JSON_VALUE)
     public HttpEntity<UserResource> updateUser(@PathVariable String publicId, @RequestBody User user) {
         return commandService.updateUser(publicId, user)
                              .map(updatedUser -> {
@@ -70,7 +66,7 @@ public class UserRestController {
                              .getOrElse(new ResponseEntity<>(BAD_REQUEST));
     }
 
-    @RequestMapping(value = "/{publicId}", method = DELETE)
+    @DeleteMapping("/{publicId}")
     public HttpEntity<Void> deleteUserByPublicId(@PathVariable String publicId) {
         if (!commandService.deleteUser(publicId)) {
             return new ResponseEntity<>(NOT_FOUND);
@@ -79,7 +75,7 @@ public class UserRestController {
         return new ResponseEntity<>(NO_CONTENT);
     }
 
-    @RequestMapping(value = "/{publicId}", method = GET)
+    @GetMapping("/{publicId}")
     public ResponseEntity<UserResource> userByPublicId(@PathVariable String publicId) {
         //@formatter:off
         return Match(queryService.findByPublicId(publicId)).of(

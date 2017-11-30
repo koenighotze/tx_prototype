@@ -5,13 +5,9 @@
 
   <th:block layout:insert="~{fragments/htmlhead}"/>
 <body style="padding-top: 50px; padding-bottom: 20px;">
-  <th:block layout:insert="~{fragments/navigation}"/>
-
   <th:block layout:fragment="content"/>
 
   <th:block layout:fragment="body_end"/>
-
-  <!--<th:block layout:insert="~{fragments/breadcrumb}"/>-->
 
   <th:block layout:replace="~{fragments/body_scripts :: end}"/>
 </body>

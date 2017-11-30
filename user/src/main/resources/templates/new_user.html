@@ -5,17 +5,9 @@
       th:with="title=#{user.create}">
 <th:block layout:fragment="content">
     <div class="container">
-        <!--<header class="header">-->
-            <!--<ol class="breadcrumb text-right">-->
-                <!--<li><a th:href="@{/}" th:text="#{user.home}">[home]</a></li>-->
-                <!--<li><a th:href="@{${collection}}" th:text="#{user.users}">[users]</a></li>-->
-            <!--</ol>-->
-
-            <!--<span class="logo"></span>-->
-        <!--</header>-->
-
         <main role="main">
-            <h2 th:text="#{user.create}">[create]</h2>
+            <h2 th:text="#{user.create_title}">[create]</h2>
+
             <form role="form" th:action="@{${self}}" th:object="${user}" th:method="post">
                 <div class="form-group has-feedback" th:classappend="${#fields.hasErrors('username')}? 'has-error'">
                     <label for="username" class="control-label" th:text="#{user.username}">[username]</label>

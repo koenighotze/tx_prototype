@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping(value = "/", produces = TEXT_HTML_VALUE)
 public class IndexHtmlController {
+
     @RequestMapping
     public String home(Model model, Principal user) {
         if (user != null) {

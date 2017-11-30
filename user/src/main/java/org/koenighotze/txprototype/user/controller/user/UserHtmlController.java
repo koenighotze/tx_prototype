@@ -7,10 +7,8 @@ import static org.koenighotze.txprototype.user.resources.UserResource.compareByL
 import static org.springframework.hateoas.Link.REL_SELF;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
 import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import javax.inject.*;
 import javax.validation.*;
@@ -44,7 +42,7 @@ public class UserHtmlController {
         this.flashMessageUtil = flashMessageUtil;
     }
 
-    @RequestMapping(method = GET)
+    @GetMapping
     public String showAllUsers(Model model) {
         List<UserResource> allUserResources = queryService.findAllUsers()
                                                           .map(UserResource::new);
@@ -64,7 +62,7 @@ public class UserHtmlController {
         return linkTo(methodOn(UserHtmlController.class).newUser(randomUUID().toString(), null));
     }
 
-    @RequestMapping(value = "/{publicId}", method = GET)
+    @GetMapping("/{publicId}")
     public String showUser(@PathVariable String publicId, Model model, RedirectAttributes redirectAttributes) {
         return queryService.findByPublicId(publicId)
                            .map(user -> {
@@ -78,7 +76,7 @@ public class UserHtmlController {
                            });
     }
 
-    @RequestMapping(value = "/{publicId}", method = DELETE, produces = TEXT_HTML_VALUE)
+    @DeleteMapping(path = "/{publicId}", produces = TEXT_HTML_VALUE, consumes = APPLICATION_FORM_URLENCODED_VALUE)
     public String deleteUser(@PathVariable String publicId, RedirectAttributes redirectAttributes) {
         if (commandService.deleteUser(publicId)) {
             flashMessageUtil.addFlashMessage(redirectAttributes, "info.user-removed", publicId);
@@ -89,7 +87,7 @@ public class UserHtmlController {
         return REDIRECT_USERS;
     }
 
-    @RequestMapping(value = "/new/{publicId}", method = GET)
+    @GetMapping("/new/{publicId}")
     public ModelAndView newUser(@PathVariable String publicId, Model model) {
         User user = new User(publicId, "", "", "", "");
 
@@ -101,10 +99,10 @@ public class UserHtmlController {
         return new ModelAndView("new_user", model.asMap());
     }
 
-    @RequestMapping(value = "/new/{publicId}", method = POST)
+    @PostMapping("/new/{publicId}")
     public String createUser(@Valid @NotNull @PathVariable String publicId, @Valid @NotNull User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            return "";
+            return "new_user";
         }
 
         return commandService.newUser(publicId, user)

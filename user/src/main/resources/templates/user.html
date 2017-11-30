@@ -4,47 +4,20 @@
       layout:decorate="layout"
       th:with="title=#{user.title(${user.username})}">
 <th:block layout:fragment="content">
-    <div class="container">
-        <!--<header class="header">-->
-            <!--<ol class="breadcrumb text-right">-->
-                <!--<li><a th:href="@{/}" th:text="#{user.home}">[home]</a></li>-->
-                <!--<li><a th:href="@{${collection}}" th:text="#{user.users}">[users]</a></li>-->
-            <!--</ol>-->
+  <div class="container">
+    <main role="main">
+      <h1 th:text="#{user.title(${user.username})}">[username]</h1>
 
-            <!--<span class="logo"></span>-->
-        <!--</header>-->
+      <div th:insert="~{fragments/user :: details}"></div>
 
-        <main role="main">
-            <h1 th:text="#{user.title(${user.username})}">[username]</h1>
-
-            <div class="form-group">
-                <label for="username" th:text="#{user.username}">[usename]</label>
-                <input type="text" readonly="readonly" class="form-control" id="username" th:value="${user.username}"/>
-            </div>
-
-            <div class="form-group">
-                <label for="firstname" th:text="#{user.firstname}">[firstname]</label>
-                <input type="text" readonly="readonly" class="form-control" id="firstname" th:value="${user.firstname}"/>
-            </div>
-
-            <div class="form-group">
-                <label for="lastname" th:text="#{user.lastname}">[lastname]</label>
-                <input type="text" readonly="readonly" class="form-control" id="lastname" th:value="${user.lastname}"/>
-            </div>
-
-            <div class="form-group">
-                <label for="email" th:text="#{user.email}">[email]</label>
-                <input type="email" readonly="readonly" class="form-control" id="email" th:value="${user.email}"/>
-            </div>
-
-            <div>
-                <form th:action="@{${self}}" th:method="delete">
-                    <button class="btn btn-sm btn-default btn-primary-spacing" th:text="#{user.delete}"></button>
-                    <a class="btn btn-primary btn-sm" th:href="@{${collection}}" role="button"
-                       th:text="#{user.back_to_users}">[Back]</a>
-                </form>
-            </div>
-        </main>
-    </div>
+      <div>
+        <form th:action="@{${self}}" th:method="delete">
+          <button class="btn btn-sm btn-default btn-primary-spacing" th:text="#{user.delete}"></button>
+          <a class="btn btn-primary btn-sm" th:href="@{${collection}}" role="button"
+             th:text="#{user.back_to_users}">[Back]</a>
+        </form>
+      </div>
+    </main>
+  </div>
 </th:block>
 </html>
