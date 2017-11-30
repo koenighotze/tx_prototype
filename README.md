@@ -1,6 +1,15 @@
 # TX Prototype
 
+Current build status: [![Build Status](https://travis-ci.org/koenighotze/tx_prototype.svg?branch=master)](https://travis-ci.org/koenighotze/tx_prototype)
+
+
+
 An explorative approach to build a system of SCS using client side transclusion.
+
+
+
+
+
 
 ## Tech stack
 
