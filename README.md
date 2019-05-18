@@ -1,5 +1,6 @@
 # TX Prototype
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/002bdec7cc23410384c587e7428b5f22)](https://app.codacy.com/app/david-schmitz-privat/tx_prototype?utm_source=github.com&utm_medium=referral&utm_content=koenighotze/tx_prototype&utm_campaign=Badge_Grade_Dashboard)
 Current build status: [![Build Status](https://travis-ci.org/koenighotze/tx_prototype.svg?branch=master)](https://travis-ci.org/koenighotze/tx_prototype)
 
 
